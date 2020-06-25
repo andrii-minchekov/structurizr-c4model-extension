@@ -1,0 +1,7 @@
+== Deployment
+
+[small]
+----
+This section provides information about the mapping between the software architecture and the infrastructure architecture. It provides instructions how to deploy for each env.
+----
+

@@ -1,0 +1,6 @@
+== Infrastructure Architecture
+
+[small]
+----
+This section provides information about the infrastructure architecture of the System. Hardware requirements are described for each env.
+----

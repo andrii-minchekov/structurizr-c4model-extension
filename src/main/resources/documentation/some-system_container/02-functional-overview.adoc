@@ -1,0 +1,6 @@
+== Functional Overview
+
+[small]
+----
+This section provides a short overview of the System from a business perspective, pethaps including wireframes, UI mockups, screenshots, workflow giagrams, business process diagrams, etc.
+----

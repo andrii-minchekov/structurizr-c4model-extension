@@ -1,0 +1,6 @@
+== External interfaces
+
+[small]
+----
+Interfaces, particularly those that are external to your software system, are one of the riskiest parts of any software system so it’s very useful to summarise what the interfaces are and how they work.
+----

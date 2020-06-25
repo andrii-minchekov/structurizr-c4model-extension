@@ -1,0 +1,6 @@
+== Operation and Support
+
+[small]
+----
+This section describes how people will run, monitor and manage Software System.
+----

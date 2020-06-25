@@ -1,0 +1,21 @@
+cache:
+  paths:
+    - .gradle/
+
+build-test:
+  except:
+    - master
+  script:
+    - export GRADLE_USER_HOME=/cache/gradle
+    - ./gradlew clean build
+    - pushd docker && sh export-diagrams.sh
+    - popd && ./gradlew -x test publishArchModelToCloudTest artifactoryPublish
+
+build-prod:
+  only:
+    - master
+  script:
+    - export GRADLE_USER_HOME=/cache/gradle
+    - ./gradlew clean build
+    - pushd docker && sh export-diagrams.sh
+    - popd && ./gradlew -x test publishArchModelToCloudProd artifactoryPublish

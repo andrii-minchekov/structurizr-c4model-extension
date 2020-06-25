@@ -1,0 +1,11 @@
+== Context
+
+[small]
+----
+This section answers the following types of questions: 1) what is this software system all about?; 2) what is it that’s being built?; 3) how does it fit into the existing environment (e.g. systems, business processes, etc)?; 4) who is using it (users, roles, actors, personas, etc)?
+----
+
+
+
+
+

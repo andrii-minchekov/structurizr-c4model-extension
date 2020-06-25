@@ -1,0 +1,6 @@
+== Development Environment
+
+[small]
+----
+This section describes the development environment required to build the System. It describes how a new developer gets started.
+----

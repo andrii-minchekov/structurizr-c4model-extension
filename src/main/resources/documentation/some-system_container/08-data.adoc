@@ -1,0 +1,7 @@
+== Data
+
+[small]
+----
+This section describes data models, entity relationship diagrams (if they're complex). As well provides data secutiry info, data volumes, archiving strategies, backup strategies, etc.
+----
+

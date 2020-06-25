@@ -1,0 +1,8 @@
+== Quality Attributes
+
+[small]
+----
+This section provides information about the desired quality attributes
+----
+
+

@@ -1,0 +1,7 @@
+== Principles
+
+[small]
+----
+This section provides information about the principles adopted for the development of the System.
+----
+

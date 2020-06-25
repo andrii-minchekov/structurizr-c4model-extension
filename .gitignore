@@ -1,0 +1,7 @@
+.idea/
+.gradle/
+target/
+build/
+tests-output/
+out/
+repo

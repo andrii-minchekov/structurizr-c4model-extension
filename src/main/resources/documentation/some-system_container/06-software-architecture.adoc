@@ -1,0 +1,8 @@
+== Software Architecture
+
+[small]
+----
+This section is a “big picture” view to present the structure of the System, including static structure (containers, components) and dynamic/runtime behaviour.
+Show here the major containers and technology choices as well as components with their interactions.
+----
+

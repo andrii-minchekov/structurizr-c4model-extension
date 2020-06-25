@@ -1,0 +1,88 @@
+buildscript {
+    ext.kotlin_version = '1.3.61'
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'application'
+
+group 'com.anmi.architecture'
+
+def buildNumber = System.getenv("CI_JOB_ID") ? System.getenv("CI_JOB_ID") : "000000"
+
+version "1.0.0.${buildNumber}-SNAPSHOT"
+
+mainClassName = "RunnerKt"
+
+repositories {
+    mavenCentral()
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+    api 'cc.catalysts.structurizr:structurizr-kotlin:1.3.0.3'
+    api 'com.structurizr:structurizr-client:1.3.5'
+    api 'com.structurizr:structurizr-spring:1.3.4'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation 'org.jetbrains.kotlin:kotlin-reflect'
+
+    implementation 'org.slf4j:slf4j-simple:1.7.28'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
+    testImplementation 'org.assertj:assertj-core:3.12.2'
+}
+
+def archiveLocation = getArchiveLocation()
+
+private String getArchiveLocation() {
+    def props = new Properties()
+    file("src/main/resources/config.properties").withInputStream { props.load(it) }
+    props.getProperty("archiveLocation")
+}
+
+task makeZip(type: Zip) {
+    dependsOn test
+    from(archiveLocation)
+}
+
+artifacts {
+    archives makeZip
+}
+
+tasks.withType(PublishToMavenRepository) { task ->
+    task.dependsOn makeZip
+}
+
+tasks.withType(Test) {
+    useJUnitPlatform()
+}
+
+task publishArchModelToCloudProd(type: JavaExec) {
+    main = "com.anmi.c4.Runner"
+    classpath(
+            sourceSets.main.runtimeClasspath
+    )
+    args = ["PROD"]
+}
+
+task publishArchModelToCloudTest(type: JavaExec) {
+    main = "com.anmi.c4.Runner"
+    classpath(
+            sourceSets.main.runtimeClasspath
+    )
+    args = ["TEST"]
+}
+
+
+
+

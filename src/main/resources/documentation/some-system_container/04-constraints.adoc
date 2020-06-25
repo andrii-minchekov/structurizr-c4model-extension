@@ -1,0 +1,7 @@
+== Constraints
+
+[small]
+----
+This section provides a list of the environmental constraints imposed on the development of the System (timescales, budget, technology, team size/skills, etc).
+----
+
