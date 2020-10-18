@@ -15,8 +15,9 @@ class EDocumentation(workspace: Workspace) {
     init {
         addImages()
         workspace.model.softwareSystems.forEach { ss ->
-            val containerView = workspace.views.containerViews.first { view -> view.softwareSystem.name == ss.name }
-            doc(ss, containerView)
+            workspace.views.containerViews.firstOrNull() { view -> view.softwareSystem.name == ss.name }?.let {
+                doc(ss, it)
+            }
         }
     }
 

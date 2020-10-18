@@ -20,9 +20,8 @@ There are **2 Scenarios** how to use this library:
 These 2 scenarios produce models and views from different C4 levels. These C4 models and views are merged by the library before push to Cloud server in order to maintain consistency in a single Cloud space.
 
 #### Scenario 1 steps
-1. create new class with a single definition of your custom system and container model, describe all elements and relations there.
-2. add instance of above class as a property in EWorkspace.kt
-3. add new class per a view definition and init it in EWorkspace class
+1. Create an instance of EWorkspace.kt providing EWorkspaceSpec with modeled Systems and Diagrams.
+Model System/Container/Component implementing interfaces SystemModel, ESoftwareSystem, EContainer.
 
 #### Scenario 2 steps
 1. Add a test dependency to your service project `com.anmi.architecture:c4-model:1.+`
@@ -63,3 +62,4 @@ If you just wanna play with C4, you can auto scan your source code repository an
 
 #### Notes:
 1. Be careful with renaming diagram key and name of the elements. If you rename some element you will loose coordinates of that element at diagram layout.
+2. Auto scan of components from a code base works only for Java source code compiled with Java 8. 

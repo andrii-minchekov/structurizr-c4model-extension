@@ -1,8 +1,13 @@
 package com.structurizr.model
 
 import cc.catalysts.structurizr.kotlin.ElementConfiguration
-import com.anmi.c4.model.element.*
-import com.structurizr.analysis.AbstractSpringComponentFinderStrategy.*
+import com.anmi.c4.model.element.EContainer
+import com.anmi.c4.model.element.EPerson
+import com.anmi.c4.model.element.ESoftwareSystem
+import com.anmi.c4.model.element.ETag
+import com.structurizr.analysis.AbstractSpringComponentFinderStrategy.SPRING_REPOSITORY
+import com.structurizr.analysis.AbstractSpringComponentFinderStrategy.SPRING_REST_CONTROLLER
+import com.structurizr.analysis.AbstractSpringComponentFinderStrategy.SPRING_SERVICE
 
 fun SoftwareSystem.assignTags(vararg tags: String): SoftwareSystem {
     this.addTags(*tags)
@@ -25,6 +30,10 @@ fun Model.getSystem(obj: ESoftwareSystem): SoftwareSystem {
 
 fun Model.getPerson(obj: EPerson): Person {
     return this.getPersonWithName(obj.label) ?: this.addPerson(obj.label, obj.description)
+}
+
+fun Model.addPerson(obj: EPerson): Person {
+    return this.addPerson(obj.label, obj.description)
 }
 
 fun Model.addSystem(system: ESoftwareSystem): SoftwareSystem {

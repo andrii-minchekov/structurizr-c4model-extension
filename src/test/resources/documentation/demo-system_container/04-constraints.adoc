@@ -1,0 +1,11 @@
+== Constraints
+
+[small]
+----
+This section provides a list of the environmental constraints imposed on the development of the System (timescales, budget, technology, team size/skills, etc).
+----
+
+=== Budget
+Since there is no formal budget for this application,
+there is a constraint to use free and open source technologies for the development. Ideally, the website should run on a single server with the cheapest hosting costs.
+

@@ -8,18 +8,26 @@ import com.anmi.c4.analysis.ComponentFinderParams
 import com.anmi.c4.analysis.LocalPathToGitUrl
 import com.anmi.c4.analysis.Packages
 import com.anmi.c4.analysis.Sources
-import com.anmi.c4.config.Config
+import com.anmi.c4.config.ConfigCreator
+import com.anmi.c4.config.ConfigInstance
 import com.anmi.c4.config.StructurizrFactory
 import com.anmi.c4.diagram.ComponentDiagram.Companion.buildKey
-import com.anmi.c4.model.element.*
+import com.anmi.c4.model.element.EContainer
+import com.anmi.c4.model.element.ETag
+import com.anmi.c4.model.element.Technology
 import com.structurizr.Workspace
 import com.structurizr.documentation.replaceDocumentationBy
-import com.structurizr.view.*
+import com.structurizr.view.ComponentView
+import com.structurizr.view.DynamicView
+import com.structurizr.view.PaperSize
+import com.structurizr.view.View
+import com.structurizr.view.addComponentViews
+import com.structurizr.view.addDynamicViews
 import org.slf4j.LoggerFactory
 
 fun Workspace.upload(containerName: String) {
     val workspaceId = this.id
-    val config = Config.from(workspaceId)
+    val config = ConfigCreator.fromId(workspaceId)
     val structurizrClient = StructurizrFactory.client(config)
     val remoteWorkspace = structurizrClient.getWorkspace(config.workspaceId)
     this.mergeInto(remoteWorkspace, containerName)
@@ -184,7 +192,7 @@ fun ElementConfiguration.usedBy(element: Element, description: String, vararg te
     this.usedBy.add(Dependency(element, description, technologies.joinToString(transform = Technology::toString), interactionStyle))
 }
 
-fun Workspace.scanComponentsWith(config: Config, containerName: String = "Scratch-${(0..10).random()}", packagesWithComponents: Set<String>, javadocSourceDirs: Set<String>? = Sources().sourceDirs,
+fun Workspace.scanComponentsWith(config: ConfigInstance, containerName: String = "Scratch-${(0..10).random()}", packagesWithComponents: Set<String>, javadocSourceDirs: Set<String>? = Sources().sourceDirs,
                                  localPathToGitUrl: LocalPathToGitUrl? = null) {
     val container = this.model.getSystem(fakeSystem()).addContainer(containerName, "It's just a playground container", "")
     container.addComponentsFrom(ComponentFinderParams(Packages(packagesWithComponents), javadocSourceDirs?.let { Sources(javadocSourceDirs, localPathToGitUrl) }))

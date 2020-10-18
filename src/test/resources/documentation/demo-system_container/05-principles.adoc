@@ -1,0 +1,15 @@
+== Principles
+
+[small]
+----
+This section provides information about the principles adopted for the development of the System.
+----
+
+=== Package by Component
+
+image::demo-system_container/package-by-component-with-clean-modules.png[Sunset]
+
+
+=== Configuration
+
+=== Automated testing

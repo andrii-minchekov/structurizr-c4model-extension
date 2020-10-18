@@ -9,6 +9,7 @@ buildscript {
 }
 
 apply plugin: 'kotlin'
+apply plugin: 'java'
 apply plugin: 'application'
 
 group 'com.anmi.architecture'
@@ -46,7 +47,7 @@ def archiveLocation = getArchiveLocation()
 
 private String getArchiveLocation() {
     def props = new Properties()
-    file("src/main/resources/config.properties").withInputStream { props.load(it) }
+    file("src/test/resources/config.properties").withInputStream { props.load(it) }
     props.getProperty("archiveLocation")
 }
 
