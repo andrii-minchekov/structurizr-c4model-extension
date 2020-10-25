@@ -1,10 +1,10 @@
 package com.structurizr.model
 
 import cc.catalysts.structurizr.kotlin.ElementConfiguration
-import com.anmi.c4.model.element.EContainer
-import com.anmi.c4.model.element.EPerson
-import com.anmi.c4.model.element.ESoftwareSystem
-import com.anmi.c4.model.element.ETag
+import com.anmi.c4.model.element.IContainer
+import com.anmi.c4.model.element.IPerson
+import com.anmi.c4.model.element.ISystem
+import com.anmi.c4.model.element.ITag
 import com.structurizr.analysis.AbstractSpringComponentFinderStrategy.SPRING_REPOSITORY
 import com.structurizr.analysis.AbstractSpringComponentFinderStrategy.SPRING_REST_CONTROLLER
 import com.structurizr.analysis.AbstractSpringComponentFinderStrategy.SPRING_SERVICE
@@ -14,44 +14,44 @@ fun SoftwareSystem.assignTags(vararg tags: String): SoftwareSystem {
     return this
 }
 
-fun SoftwareSystem.assignTags(vararg tags: ETag): SoftwareSystem {
+fun SoftwareSystem.assignTags(vararg tags: ITag): SoftwareSystem {
     this.addTags(*tags.map { it.name }.toTypedArray())
     return this
 }
 
-fun Relationship.assignTags(vararg tags: ETag): Relationship {
+fun Relationship.assignTags(vararg tags: ITag): Relationship {
     this.addTags(*tags.map { it.name }.toTypedArray())
     return this
 }
 
-fun Model.getSystem(obj: ESoftwareSystem): SoftwareSystem {
+fun Model.getSystem(obj: ISystem): SoftwareSystem {
     return this.getSoftwareSystemWithName(obj.label) ?: this.addSystem(obj)
 }
 
-fun Model.getPerson(obj: EPerson): Person {
+fun Model.getPerson(obj: IPerson): Person {
     return this.getPersonWithName(obj.label) ?: this.addPerson(obj.label, obj.description)
 }
 
-fun Model.addPerson(obj: EPerson): Person {
+fun Model.addPerson(obj: IPerson): Person {
     return this.addPerson(obj.label, obj.description)
 }
 
-fun Model.addSystem(system: ESoftwareSystem): SoftwareSystem {
+fun Model.addSystem(system: ISystem): SoftwareSystem {
     return this.getSoftwareSystemWithName(system.label) ?: addSoftwareSystem(system)
 }
 
-private fun Model.addSoftwareSystem(system: ESoftwareSystem): SoftwareSystem {
+private fun Model.addSoftwareSystem(system: ISystem): SoftwareSystem {
     val list: List<String> = system.tag.map { it.name }
     return this.addSoftwareSystem(system.location, system.label, system.description).assignTags(*list.toTypedArray())
 }
 
-fun SoftwareSystem.addContainer(container: EContainer): Container {
+fun SoftwareSystem.addContainer(container: IContainer): Container {
     return this.addContainer(container) {}
 }
 
-fun SoftwareSystem.addContainer(eContainer: EContainer, init: ElementConfiguration.() -> Unit): Container {
+fun SoftwareSystem.addContainer(eContainer: IContainer, init: ElementConfiguration.() -> Unit): Container {
     val container = this.addContainer(eContainer.label, eContainer.description, eContainer.technologies.joinToString()).apply {
-        addTags(ETag.E_CONTAINER_TAG.name)
+        addTags(ITag.E_CONTAINER_TAG.name)
     }
     val config: ElementConfiguration = ElementConfiguration().apply(init)
     config.tags.forEach { t -> container.addTags(t) }
@@ -76,15 +76,15 @@ fun SoftwareSystem.addContainer(eContainer: EContainer, init: ElementConfigurati
 fun Model.tagSpringComponents() {
     this.softwareSystems.forEach {
         it.containers.forEach {
-            it.components.filter { c -> c.technology == SPRING_REST_CONTROLLER }.forEach { c -> c.addTags(ETag.SPRING_REST_CONTROLLER.name) }
-            it.components.filter { c -> c.technology == SPRING_SERVICE }.forEach { c -> c.addTags(ETag.SPRING_SERVICE.name) }
-            it.components.filter { c -> c.technology == SPRING_REPOSITORY }.forEach { c -> c.addTags(ETag.SPRING_REPOSITORY.name) }
+            it.components.filter { c -> c.technology == SPRING_REST_CONTROLLER }.forEach { c -> c.addTags(ITag.SPRING_REST_CONTROLLER.name) }
+            it.components.filter { c -> c.technology == SPRING_SERVICE }.forEach { c -> c.addTags(ITag.SPRING_SERVICE.name) }
+            it.components.filter { c -> c.technology == SPRING_REPOSITORY }.forEach { c -> c.addTags(ITag.SPRING_REPOSITORY.name) }
         }
     }
 }
 
-fun SoftwareSystem.getContainer(container: EContainer): Container {
-    return this.getContainerWithName(container.label)!!
+fun SoftwareSystem.getContainer(container: IContainer): Container {
+    return this.getContainerWithName(container.label) ?: this.addContainer(container.label, container.description, container.technologies.joinToString())
 }
 
 
@@ -124,14 +124,14 @@ fun Model.components(): List<Component> {
     return this.softwareSystems.flatMap { s -> s.containers }.flatMap { c -> c.components }
 }
 
-fun StaticStructureElement.uses(system: ESoftwareSystem, desc: String) {
+fun StaticStructureElement.uses(system: ISystem, desc: String) {
     this.uses(model.getSystem(system), desc)
 }
 
-fun SoftwareSystem.usedBy(system: ESoftwareSystem, desc: String) {
+fun SoftwareSystem.usedBy(system: ISystem, desc: String) {
     model.getSystem(system).uses(this, desc)
 }
 
-fun SoftwareSystem.usedBy(person: EPerson, desc: String) {
+fun SoftwareSystem.usedBy(person: IPerson, desc: String) {
     model.getPerson(person).uses(this, desc)
 }

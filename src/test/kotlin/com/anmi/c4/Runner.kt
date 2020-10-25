@@ -1,9 +1,7 @@
 @file:JvmName("Runner")
 
-package com.anmi.c4.model
+package com.anmi.c4
 
-import com.anmi.c4.EWorkspace
-import com.anmi.c4.WorkspaceUploader
 import com.anmi.c4.config.ConfigInstance
 
 class Runner {

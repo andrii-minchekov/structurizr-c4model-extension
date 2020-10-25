@@ -1,4 +1,4 @@
-package com.anmi.c4.model;
+package com.anmi.c4.demosystem;
 
 import org.springframework.stereotype.Service;
 

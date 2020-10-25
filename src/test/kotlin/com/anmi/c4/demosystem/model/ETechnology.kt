@@ -1,8 +1,8 @@
-package com.anmi.c4.model
+package com.anmi.c4.demosystem.model
 
 import com.anmi.c4.model.element.Technology
 
-enum class TechnologyInstance(override val label: String, override var version: String = "") : Technology {
+enum class ETechnology(override val label: String, override var version: String = "") : Technology {
     JAVA_11("Java", "11"),
     GRPC("gRPC"),
     THRIFT("Apache Thrift"),

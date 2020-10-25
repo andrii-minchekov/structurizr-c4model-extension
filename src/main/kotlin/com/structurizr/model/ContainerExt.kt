@@ -4,7 +4,8 @@ import cc.catalysts.structurizr.kotlin.ElementConfiguration
 import cc.catalysts.structurizr.kotlin.addComponent
 import com.anmi.c4.analysis.ComponentFinderParams
 import com.anmi.c4.analysis.LocalPathToGitUrl
-import com.anmi.c4.model.element.ETag
+import com.anmi.c4.model.element.IComponent
+import com.anmi.c4.model.element.ITag
 import com.anmi.c4.model.element.Technology
 import com.structurizr.analysis.ComponentFinder
 import com.structurizr.analysis.SourceCodeComponentFinderStrategy
@@ -43,6 +44,10 @@ fun Container.linkComponentsWithCode(param: LocalPathToGitUrl) {
     }
 }
 
+fun Container.getComponent(component: IComponent): Component {
+    return this.getComponentWithName(component.label) ?: this.addComponent(component.label, component.description).assignTags(*component.tags)
+}
+
 fun Container.enrichComponentsFrom(components: Set<Component>) {
     this.components.forEach { thisComponent ->
         val found = components.firstOrNull { thisComponent.name.replace(" ", "") == it.name }
@@ -53,7 +58,7 @@ fun Container.enrichComponentsFrom(components: Set<Component>) {
         }
     }
 }
-fun Container.assignTags(vararg tags: ETag): Container {
+fun Container.assignTags(vararg tags: ITag): Container {
     return assignTags(*tags.map { it.name }.toTypedArray())
 }
 fun Container.assignTags(vararg tags: String): Container {
@@ -65,7 +70,7 @@ fun Container.addNewComponent(name: String, description: String, vararg technolo
     return this.addComponent(name, description, technologies.joinToString { e -> e.toString() }) { init() }
 }
 
-fun Container.addComponent(remoteComponent: Component): Component {
+internal fun Container.addComponent(remoteComponent: Component): Component {
     return this.addComponent(remoteComponent.name, remoteComponent.description, remoteComponent.technology).apply {
         tags = remoteComponent.tags
         perspectives = remoteComponent.perspectives

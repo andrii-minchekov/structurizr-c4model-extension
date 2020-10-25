@@ -1,8 +1,16 @@
 package com.anmi.c4.diagram.style
 
-import com.anmi.c4.model.element.ETag.*
+import com.anmi.c4.model.element.ITag.E_COMPONENT_TAG
+import com.anmi.c4.model.element.ITag.E_CONTAINER_TAG
+import com.anmi.c4.model.element.ITag.E_SYSTEM_TAG
+import com.anmi.c4.model.element.ITag.SPRING_REPOSITORY
+import com.anmi.c4.model.element.ITag.SPRING_REST_CONTROLLER
+import com.anmi.c4.model.element.ITag.SPRING_SERVICE
 import com.structurizr.Workspace
-import com.structurizr.model.Tags.*
+import com.structurizr.model.Tags.COMPONENT
+import com.structurizr.model.Tags.CONTAINER
+import com.structurizr.model.Tags.PERSON
+import com.structurizr.model.Tags.SOFTWARE_SYSTEM
 import com.structurizr.view.Shape
 
 class Stylist(val workspace: Workspace) {

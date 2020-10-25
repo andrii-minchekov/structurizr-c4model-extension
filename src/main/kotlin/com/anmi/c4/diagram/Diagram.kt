@@ -1,5 +1,6 @@
 package com.anmi.c4.diagram
 
+import com.anmi.c4.model.element.ITag
 import com.structurizr.Workspace
 import com.structurizr.view.View
 
@@ -16,5 +17,5 @@ interface Diagram<out V : View> {
     /**
      * Build relations between components regarded to the type of the diagram
      */
-    fun draw(workspace: Workspace): V
+    fun draw(workspace: Workspace, vararg tag: ITag): V
 }

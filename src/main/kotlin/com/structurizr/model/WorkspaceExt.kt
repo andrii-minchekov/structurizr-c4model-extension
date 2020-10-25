@@ -3,7 +3,6 @@ package com.structurizr.model
 import cc.catalysts.structurizr.kotlin.Dependency
 import cc.catalysts.structurizr.kotlin.ElementConfiguration
 import com.anmi.c4.EWorkspace
-import com.anmi.c4.EWorkspace.Companion.fakeSystem
 import com.anmi.c4.analysis.ComponentFinderParams
 import com.anmi.c4.analysis.LocalPathToGitUrl
 import com.anmi.c4.analysis.Packages
@@ -12,9 +11,10 @@ import com.anmi.c4.config.ConfigCreator
 import com.anmi.c4.config.ConfigInstance
 import com.anmi.c4.config.StructurizrFactory
 import com.anmi.c4.diagram.ComponentDiagram.Companion.buildKey
-import com.anmi.c4.model.element.EContainer
-import com.anmi.c4.model.element.ETag
+import com.anmi.c4.model.element.IContainer
+import com.anmi.c4.model.element.ITag
 import com.anmi.c4.model.element.Technology
+import com.anmi.c4.util.ScannedWorkspace
 import com.structurizr.Workspace
 import com.structurizr.documentation.replaceDocumentationBy
 import com.structurizr.view.ComponentView
@@ -42,7 +42,7 @@ internal fun Workspace.mergeInto(remoteWorkspace: Workspace): Workspace {
     return mergeInto(remoteWorkspace, null, false)
 }
 
-fun Workspace.mergeInto(remoteWorkspace: Workspace, bypassContainer: EContainer): Workspace {
+fun Workspace.mergeInto(remoteWorkspace: Workspace, bypassContainer: IContainer): Workspace {
     return mergeInto(remoteWorkspace, bypassContainer.label)
 }
 
@@ -184,7 +184,7 @@ fun ElementConfiguration.uses(element: Element, description: String, vararg tech
     uses.add(Dependency(element, description, technologies.joinToString(transform = Technology::toString), interactionStyle))
 }
 
-fun ElementConfiguration.withTags(vararg tag: ETag) {
+fun ElementConfiguration.withTags(vararg tag: ITag) {
     this.tags.addAll(tag.map { it.name })
 }
 
@@ -194,7 +194,7 @@ fun ElementConfiguration.usedBy(element: Element, description: String, vararg te
 
 fun Workspace.scanComponentsWith(config: ConfigInstance, containerName: String = "Scratch-${(0..10).random()}", packagesWithComponents: Set<String>, javadocSourceDirs: Set<String>? = Sources().sourceDirs,
                                  localPathToGitUrl: LocalPathToGitUrl? = null) {
-    val container = this.model.getSystem(fakeSystem()).addContainer(containerName, "It's just a playground container", "")
+    val container = this.model.getSystem(ScannedWorkspace.fakeSystem()).addContainer(containerName, "It's just a playground container", "")
     container.addComponentsFrom(ComponentFinderParams(Packages(packagesWithComponents), javadocSourceDirs?.let { Sources(javadocSourceDirs, localPathToGitUrl) }))
     this.defaultComponentView(container)
     StructurizrFactory.client(config).putWorkspace(config.workspaceId, this)

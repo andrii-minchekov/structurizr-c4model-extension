@@ -1,8 +1,15 @@
 package com.structurizr.view
 
-import com.anmi.c4.model.element.EPerson
-import com.anmi.c4.model.element.ESoftwareSystem
-import com.structurizr.model.*
+import com.anmi.c4.model.element.IPerson
+import com.anmi.c4.model.element.ISystem
+import com.anmi.c4.model.element.ITag
+import com.structurizr.model.Element
+import com.structurizr.model.Model
+import com.structurizr.model.SoftwareSystem
+import com.structurizr.model.findElementByCanonicalName
+import com.structurizr.model.findRelation
+import com.structurizr.model.getPerson
+import com.structurizr.model.getSystem
 
 internal fun ViewSet.addComponentViews(newModel: Model, remoteComponentViews: Collection<ComponentView>) {
     val thisViews = this.componentViews!!
@@ -78,11 +85,11 @@ fun View.addAllElementsRelatedWith(element: Element) {
     this.addElementsWithOutgoingRelationFrom(element)
 }
 
-fun View.add(system: ESoftwareSystem) {
+fun View.add(system: ISystem) {
     this.add(this.model.getSystem(system))
 }
 
-fun View.add(person: EPerson) {
+fun View.add(person: IPerson) {
     this.add(this.model.getPerson(person))
 }
 
@@ -92,10 +99,19 @@ fun DynamicView.add(source: Element, description: String, destination: Element, 
     return relationshipView
 }
 
-fun View.addElementsWithTag(elements: Set<Element>, tag: String) {
-    elements.forEach {
+fun View.addElementsWithTag(elements: Set<Element>, vararg tags: ITag) {
+    elements.forEach { element ->
         when {
-            it.hasTag(tag) -> this.add(it)
+            tags.isEmpty() -> {
+                this.add(element)
+            }
+            else -> {
+                tags.forEach { tag ->
+                    when {
+                        element.hasTag(tag.name) -> this.add(element)
+                    }
+                }
+            }
         }
     }
 }

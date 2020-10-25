@@ -1,47 +1,59 @@
 package com.anmi.c4
 
 import com.anmi.c4.EWorkspace.Companion.GENERATOR
-import com.anmi.c4.analysis.ComponentFinderParams
-import com.anmi.c4.analysis.LocalPathToGitUrl
-import com.anmi.c4.analysis.Packages
-import com.anmi.c4.analysis.Sources
 import com.anmi.c4.config.Config
-import com.anmi.c4.config.ConfigInstance
-import com.anmi.c4.config.StructurizrFactory
 import com.anmi.c4.diagram.Diagram
 import com.anmi.c4.diagram.style.Stylist
 import com.anmi.c4.documentation.EDocumentation
-import com.anmi.c4.model.element.ESoftwareSystem
-import com.anmi.c4.model.element.ETag
 import com.anmi.c4.model.element.SystemModel
 import com.structurizr.Workspace
-import com.structurizr.model.Location
 import com.structurizr.model.Model
 import com.structurizr.model.SequentialIntegerIdGeneratorStrategy
-import com.structurizr.model.addComponentsFrom
-import com.structurizr.model.defaultComponentView
+import com.structurizr.model.SoftwareSystem
 import com.structurizr.model.getSystem
+import com.structurizr.view.DeploymentView
+import com.structurizr.view.DynamicView
 import com.structurizr.view.StaticView
+import com.structurizr.view.View
 import java.lang.reflect.Constructor
 
 class EWorkspace(config: Config, init: EWorkspaceSpec.() -> Unit) {
     val workspace = createEmptyWorkspace(config)
 
     init {
-        val spec = EWorkspaceSpec().apply(init)
-        addDiagrams(spec.diagrams)
+        EWorkspaceSpec().apply(init).apply {
+            runModels()
+            runDiagrams()
+        }
         EDocumentation(workspace)
     }
 
-    private fun addDiagrams(diagrams: List<Diagram<StaticView>>) {
-        diagrams.forEach {
-            it.draw(workspace)
-        }
-    }
 
     inner class EWorkspaceSpec {
         lateinit var models: List<SystemModel>
-        lateinit var diagrams: List<Diagram<StaticView>>
+        lateinit var staticDiagrams: List<Diagram<StaticView>>
+        lateinit var dynamicDiagrams: List<Diagram<DynamicView>>
+        lateinit var deploymentDiagrams: List<Diagram<DeploymentView>>
+
+        private fun allDiagrams(): List<Diagram<View>> {
+            val result = ArrayList<Diagram<View>>()
+            result.addAll(staticDiagrams)
+            result.addAll(dynamicDiagrams)
+            result.addAll(deploymentDiagrams)
+            return result
+        }
+
+        internal fun runDiagrams() {
+            allDiagrams().forEach {
+                it.draw(workspace)
+            }
+        }
+
+        internal fun runModels() {
+            models.forEach {
+                it(workspace.model)
+            }
+        }
 
         fun workspace(): Workspace {
             return this@EWorkspace.workspace
@@ -50,30 +62,14 @@ class EWorkspace(config: Config, init: EWorkspaceSpec.() -> Unit) {
 
     companion object {
         val GENERATOR = SequentialIntegerIdGeneratorStrategy()
-        private val config = ConfigInstance.TEST
-
-        @JvmStatic
-        @JvmOverloads
-        fun scanComponentsToPlaygroundFrom(containerName: String = "Scratch-${(0..10).random()}", packagesWithComponents: Set<String>, javadocSourceDirs: Set<String>? = Sources().sourceDirs,
-                                           localPathToGitUrl: LocalPathToGitUrl? = null) {
-            val workspace = createEmptyWorkspace(config)
-            val container = workspace.model.getSystem(fakeSystem()).addContainer(containerName, "It's just a playground container", "")
-            container.addComponentsFrom(ComponentFinderParams(Packages(packagesWithComponents), javadocSourceDirs?.let { Sources(javadocSourceDirs, localPathToGitUrl) }))
-            workspace.defaultComponentView(container)
-            StructurizrFactory.client(config).putWorkspace(config.workspaceId, workspace)
-        }
-
-        fun fakeSystem(): ESoftwareSystem {
-            return object : ESoftwareSystem {
-                override val location: Location
-                    get() = Location.Internal
-                override val label: String
-                    get() = "Fake System"
-                override val description: String
-                    get() = ""
-                override val tag: Array<ETag>
-                    get() = arrayOf()
-            }
+        fun simpleWorkspace(config: Config, targetModel: SystemModel, diagrams: (SoftwareSystem) -> List<Diagram<StaticView>>): Workspace {
+            return EWorkspace(config) {
+                this.models = listOf(targetModel)
+                val targetSystem = workspace().model.getSystem(targetModel.system)
+                this.staticDiagrams = diagrams(targetSystem)
+                this.dynamicDiagrams = emptyList()
+                this.deploymentDiagrams = emptyList()
+            }.workspace
         }
     }
 }
