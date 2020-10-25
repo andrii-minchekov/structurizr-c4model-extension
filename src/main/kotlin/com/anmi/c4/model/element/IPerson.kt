@@ -15,7 +15,7 @@ interface IPerson {
         return {
             it.getPerson(this).run {
                 val system = it.getSystem(otherSystem)
-                uses(system, relDescription, technology.takeIf { it.isNotEmpty() }?.toString())
+                uses(system, relDescription, Technology.stringify(technology))
                 system
             }
         }
