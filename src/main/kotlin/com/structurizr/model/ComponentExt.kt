@@ -10,3 +10,8 @@ fun Component.assignTags(vararg tags: String): Component {
     this.addTags(*tags)
     return this
 }
+
+fun Component.assignUrl(url: String): Component {
+    this.url = url
+    return this
+}

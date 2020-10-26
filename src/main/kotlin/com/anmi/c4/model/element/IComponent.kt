@@ -11,6 +11,7 @@ interface IComponent {
     val label: String
     val description: String
     val tags : Array<ITag>
+    val url : String
 
     fun toModel(container: Container): Component = container.getComponent(this)
 
