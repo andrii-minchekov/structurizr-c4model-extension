@@ -4,6 +4,7 @@ import com.anmi.c4.model.element.ITag
 import com.anmi.c4.util.refine
 import com.structurizr.Workspace
 import com.structurizr.model.SoftwareSystem
+import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ContainerView
 import com.structurizr.view.addAllElementsRelatedWith
 
@@ -19,7 +20,7 @@ interface ContainerDiagram : Diagram<ContainerView> {
 
     override fun draw(workspace: Workspace, vararg tag: ITag): ContainerView {
         val containerView = workspace.views.createContainerView(targetSystem, key, "The container diagram for the ${targetSystem.name} System")
-        containerView.enableAutomaticLayout()
+        containerView.enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 600, 200, false)
         targetSystem.containers.forEach(containerView::addAllElementsRelatedWith)
         return containerView
     }

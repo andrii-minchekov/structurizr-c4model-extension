@@ -5,6 +5,7 @@ import com.anmi.c4.util.refine
 import com.structurizr.Workspace
 import com.structurizr.model.Container
 import com.structurizr.model.SoftwareSystem
+import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ComponentView
 import com.structurizr.view.addElementsWithTag
 
@@ -21,7 +22,7 @@ interface ComponentDiagram : Diagram<ComponentView> {
 
     override fun draw(workspace: Workspace, vararg tag: ITag): ComponentView {
         return workspace.views.createComponentView(targetContainer, key, "Component Diagram for ${targetContainer.name}").apply {
-            enableAutomaticLayout()
+            enableAutomaticLayout(AutomaticLayout.RankDirection.LeftRight, 300, 600, 200, false)
             addElementsWithTag(targetContainer.components, *tag)
         }
     }
