@@ -174,7 +174,7 @@ private fun Model.addRelationshipInternal(r: Relationship) {
 }
 
 fun Workspace.defaultComponentView(container: Container): ComponentView {
-    val view = this.views.createComponentView(container, buildKey(container.softwareSystem, container), "Default Component view of ${container.name}")
+    val view = this.views.createComponentView(container, buildKey(container.softwareSystem.name, container.name), "Default Component view of ${container.name}")
     view.paperSize = PaperSize.A2_Landscape
     view.addAllComponents()
     return view

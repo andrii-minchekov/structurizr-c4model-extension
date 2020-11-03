@@ -1,6 +1,6 @@
 package com.anmi.c4.diagram
 
-import com.structurizr.model.Container
-import com.structurizr.model.SoftwareSystem
+import com.anmi.c4.model.element.IContainer
+import com.anmi.c4.model.element.ISystem
 
-abstract class DefaultComponentDiagram(override val targetSystem: SoftwareSystem, override val targetContainer: Container) : ComponentDiagram
+abstract class DefaultComponentDiagram(override val targetSystem: ISystem, override val targetContainer: IContainer) : ComponentDiagram

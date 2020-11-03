@@ -1,27 +1,29 @@
 package com.anmi.c4.diagram
 
+import com.anmi.c4.model.element.ISystem
 import com.anmi.c4.model.element.ITag
 import com.anmi.c4.util.refine
 import com.structurizr.Workspace
-import com.structurizr.model.SoftwareSystem
+import com.structurizr.model.getSystem
 import com.structurizr.view.AutomaticLayout
 import com.structurizr.view.ContainerView
 import com.structurizr.view.addAllElementsRelatedWith
 
 interface ContainerDiagram : Diagram<ContainerView> {
 
-    val targetSystem: SoftwareSystem
+    val targetSystem: ISystem
 
     override val key: String
-        get() = "${targetSystem.name}_${type.name}".refine()
+        get() = "${targetSystem.label}_${type.name}".refine()
 
     override val type: DiagramType
         get() = DiagramType.CONTAINER
 
     override fun draw(workspace: Workspace, vararg tag: ITag): ContainerView {
-        val containerView = workspace.views.createContainerView(targetSystem, key, "The container diagram for the ${targetSystem.name} System")
+        val system = workspace.model.getSystem(targetSystem)
+        val containerView = workspace.views.createContainerView(system, key, "The container diagram for the ${targetSystem.label} System")
         containerView.enableAutomaticLayout(AutomaticLayout.RankDirection.TopBottom, 300, 600, 200, false)
-        targetSystem.containers.forEach(containerView::addAllElementsRelatedWith)
+        system.containers.forEach(containerView::addAllElementsRelatedWith)
         return containerView
     }
 }
