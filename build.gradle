@@ -84,6 +84,14 @@ task publishArchModelToCloudTest(type: JavaExec) {
     args = ["TEST"]
 }
 
+task exportWsdToPuml(type: JavaExec) {
+    main = "com.anmi.puml.WsdToPumlExport"
+    classpath(
+            sourceSets.main.runtimeClasspath
+    )
+    args = []
+}
+
 
 
 
