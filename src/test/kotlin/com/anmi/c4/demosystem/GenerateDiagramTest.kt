@@ -11,10 +11,12 @@ import com.anmi.c4.diagram.DefaultComponentDiagram
 import com.anmi.c4.diagram.DefaultSystemContextDiagram
 import com.structurizr.model.getContainer
 import org.assertj.core.api.AssertionsForInterfaceTypes.assertThat
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 
 class GenerateDiagramTest {
 
+    @Disabled
     @Test
     fun `should create remote workspace with demo model`() {
         val config = ConfigInstance.TEST

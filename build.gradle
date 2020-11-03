@@ -9,16 +9,14 @@ buildscript {
 }
 
 apply plugin: 'kotlin'
-apply plugin: 'java'
-apply plugin: 'application'
+apply plugin: 'java-library'
+apply plugin: 'maven-publish'
 
 group 'com.anmi.architecture'
 
-def buildNumber = System.getenv("CI_JOB_ID") ? System.getenv("CI_JOB_ID") : "000000"
+def buildNumber = System.getenv("CI_JOB_ID") ? System.getenv("CI_JOB_ID") : ""
 
-version "1.0.0.${buildNumber}-SNAPSHOT"
-
-mainClassName = "RunnerKt"
+version "1.0.1"
 
 repositories {
     mavenCentral()
@@ -46,9 +44,17 @@ dependencies {
 def archiveLocation = getArchiveLocation()
 
 private String getArchiveLocation() {
+    return getProps("src/test/resources/config.properties").getProperty("archiveLocation")
+}
+
+private Properties getGithubProps(){
+    return getProps("doc/github.properties")
+}
+
+private Properties getProps(String filePath){
     def props = new Properties()
-    file("src/test/resources/config.properties").withInputStream { props.load(it) }
-    props.getProperty("archiveLocation")
+    file(filePath).withInputStream { props.load(it) }
+    return props
 }
 
 task makeZip(type: Zip) {
@@ -90,6 +96,28 @@ task exportWsdToPuml(type: JavaExec) {
             sourceSets.main.runtimeClasspath
     )
     args = []
+}
+
+java {
+    withSourcesJar()
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/aminchekov/structurizr-c4model-extension")
+            credentials {
+                username = project.findProperty("gpr.user") ?: getGithubProps().getProperty("userName")
+                password = project.findProperty("gpr.key") ?: getGithubProps().getProperty("accessToken")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from components.java
+        }
+    }
 }
 
 
