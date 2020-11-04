@@ -7,10 +7,8 @@ import com.structurizr.model.SoftwareSystem
 import com.structurizr.model.getContainer
 import com.structurizr.model.getSystem
 
-interface ISystem {
+interface ISystem : IElement {
     val location: Location
-    val label: String
-    val description: String
     val tag: Array<ITag>
 
     fun uses(otherSystem: ISystem, relDescription: String, vararg technology: Technology): (Model) -> SoftwareSystem {

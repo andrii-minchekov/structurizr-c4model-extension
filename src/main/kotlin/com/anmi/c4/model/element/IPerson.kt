@@ -7,9 +7,7 @@ import com.structurizr.model.getContainer
 import com.structurizr.model.getPerson
 import com.structurizr.model.getSystem
 
-interface IPerson {
-    val label: String
-    val description: String
+interface IPerson : IElement{
 
     fun uses(otherSystem: ISystem, relDescription: String, vararg technology: Technology): (Model) -> SoftwareSystem {
         return {

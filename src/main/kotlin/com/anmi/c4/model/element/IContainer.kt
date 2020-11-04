@@ -5,10 +5,8 @@ import com.structurizr.model.SoftwareSystem
 import com.structurizr.model.getContainer
 import com.structurizr.model.getSystem
 
-interface IContainer {
+interface IContainer: IElement {
     val system: ISystem
-    val label: String
-    val description: String
     val technologies: Array<Technology>
 
     fun uses(other: IContainer, relDescription: String, vararg technology: Technology): (SoftwareSystem) -> Set<Container> {

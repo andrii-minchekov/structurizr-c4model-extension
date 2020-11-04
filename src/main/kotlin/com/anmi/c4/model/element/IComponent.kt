@@ -6,10 +6,8 @@ import com.structurizr.model.SoftwareSystem
 import com.structurizr.model.getComponent
 import com.structurizr.model.getContainer
 
-interface IComponent {
+interface IComponent : IElement{
     val container: IContainer
-    val label: String
-    val description: String
     val tags : Array<ITag>
     val url : String
 
