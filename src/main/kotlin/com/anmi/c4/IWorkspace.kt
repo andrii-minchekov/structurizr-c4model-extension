@@ -3,6 +3,7 @@ package com.anmi.c4
 import com.anmi.c4.config.Config
 import com.anmi.c4.diagram.Diagram
 import com.anmi.c4.diagram.style.Stylist
+import com.anmi.c4.documentation.EDocumentation
 import com.anmi.c4.model.element.SystemModel
 import com.structurizr.Workspace
 import com.structurizr.model.SequentialIntegerIdGeneratorStrategy
@@ -19,6 +20,7 @@ interface IWorkspace {
     operator fun invoke() : Workspace{
         val workspace = createEmptyWorkspace(cfg)
         spec(workspace)
+        EDocumentation(workspace)
         return workspace
     }
 
