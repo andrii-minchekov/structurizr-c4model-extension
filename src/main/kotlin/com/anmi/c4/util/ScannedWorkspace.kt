@@ -1,12 +1,12 @@
 package com.anmi.c4.util
 
+import com.anmi.c4.IWorkspace
 import com.anmi.c4.analysis.ComponentFinderParams
 import com.anmi.c4.analysis.LocalPathToGitUrl
 import com.anmi.c4.analysis.Packages
 import com.anmi.c4.analysis.Sources
 import com.anmi.c4.config.ConfigInstance
 import com.anmi.c4.config.StructurizrFactory
-import com.anmi.c4.createEmptyWorkspace
 import com.anmi.c4.model.element.ISystem
 import com.anmi.c4.model.element.ITag
 import com.structurizr.model.Location
@@ -25,7 +25,7 @@ object ScannedWorkspace {
     fun scanComponentsToPlaygroundFrom(containerName: String = "Scratch-${(0..10).random()}", packagesWithComponents: Set<String>,
                                        javadocSourceDirs: Set<String>? = Sources().sourceDirs,
                                        localPathToGitUrl: LocalPathToGitUrl? = null) {
-        val workspace = createEmptyWorkspace(config)
+        val workspace = IWorkspace.createEmptyWorkspace(config)
         val container = workspace.model.getSystem(fakeSystem()).addContainer(containerName, "It's just a playground container", "")
         container.addComponentsFrom(ComponentFinderParams(Packages(packagesWithComponents), javadocSourceDirs?.let { Sources(javadocSourceDirs, localPathToGitUrl) }))
         workspace.defaultComponentView(container)

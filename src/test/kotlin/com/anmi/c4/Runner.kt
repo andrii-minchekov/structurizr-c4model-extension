@@ -12,7 +12,7 @@ class Runner {
                 "Specify configuration profile to be used either PROD or TEST"
             }
             val config = ConfigInstance.valueOf(args[0])
-            WorkspaceUploader.mergeAndUpload(EWorkspace(config) {}.workspace, config)
+            WorkspaceUploader.mergeAndUpload(IWorkspace.createEmptyWorkspace(config), config)
         }
     }
 }

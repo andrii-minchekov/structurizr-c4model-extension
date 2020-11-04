@@ -2,7 +2,6 @@ package com.structurizr.model
 
 import cc.catalysts.structurizr.kotlin.Dependency
 import cc.catalysts.structurizr.kotlin.ElementConfiguration
-import com.anmi.c4.EWorkspace
 import com.anmi.c4.analysis.ComponentFinderParams
 import com.anmi.c4.analysis.LocalPathToGitUrl
 import com.anmi.c4.analysis.Packages
@@ -124,7 +123,7 @@ private fun Model.updateRelationships(remoteModel: Model, thisBypassContainer: S
     this.elements.forEach { element ->
         element.relationships.filter(isComponentRelationsNotRelatedToBypassContainer(this, thisBypassContainer)).forEach { r ->
             if (r.destination is Component || r.source is Component) {
-                r.id = EWorkspace.GENERATOR.generateId(r)
+                r.id = this.getIdGenerator().generateId(r)
 
                 remoteModel.getElement(r.sourceId)?.let {
                     r.source = this.findElementByCanonicalName(it.canonicalName)

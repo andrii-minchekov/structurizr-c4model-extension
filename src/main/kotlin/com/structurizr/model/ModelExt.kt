@@ -8,6 +8,23 @@ import com.anmi.c4.model.element.ITag
 import com.structurizr.analysis.AbstractSpringComponentFinderStrategy.SPRING_REPOSITORY
 import com.structurizr.analysis.AbstractSpringComponentFinderStrategy.SPRING_REST_CONTROLLER
 import com.structurizr.analysis.AbstractSpringComponentFinderStrategy.SPRING_SERVICE
+import java.lang.reflect.Constructor
+
+fun newModel(): Model {
+    return try {
+        val constructor: Constructor<*> = Model::class.java.getDeclaredConstructor()
+        constructor.isAccessible = true
+        constructor.newInstance() as Model
+    } catch (e: Exception) {
+        throw RuntimeException(e)
+    }
+}
+
+fun Model.getIdGenerator(): IdGenerator {
+    val field = this::class.java.getDeclaredField("idGenerator")
+    field.isAccessible = true
+    return field.get(this) as IdGenerator
+}
 
 fun SoftwareSystem.assignTags(vararg tags: String): SoftwareSystem {
     this.addTags(*tags)
@@ -84,7 +101,8 @@ fun Model.tagSpringComponents() {
 }
 
 fun SoftwareSystem.getContainer(container: IContainer): Container {
-    return this.getContainerWithName(container.label) ?: this.addContainer(container.label, container.description, container.technologies.joinToString())
+    return this.getContainerWithName(container.label)
+            ?: this.addContainer(container.label, container.description, container.technologies.joinToString())
 }
 
 
