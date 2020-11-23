@@ -5,10 +5,9 @@ import com.anmi.c4.analysis.LocalPathToGitUrl
 import com.anmi.c4.analysis.Packages
 import com.anmi.c4.analysis.Sources
 import com.anmi.c4.demosystem.model.ETechnology.REST
+import com.anmi.c4.model.element.IComponentRelationship
 import com.anmi.c4.model.element.ISystem
 import com.anmi.c4.model.element.SystemModel
-import com.structurizr.model.addComponentsFrom
-import com.structurizr.model.getContainer
 import java.io.File
 
 class DemoSystemModel(override val system: ISystem = ESystem.DEMO_SYSTEM) : SystemModel {
@@ -20,17 +19,17 @@ class DemoSystemModel(override val system: ISystem = ESystem.DEMO_SYSTEM) : Syst
     )
     override val components = arrayOf(
             EComponent.ORDER_CONTROLLER.uses(EComponent.ORDER_SERVICE, "Delegate calls to domain"),
-            {
-                it.getContainer(EComponent.ORDER_CONTROLLER.container).addComponentsFrom(ComponentFinderParams(
-                        Packages(setOf("com.anmi.c4.demosystem")),
-                        Sources(setOf("src/test/java"),
-                                LocalPathToGitUrl(
-                                        File("."),
-                                        "https://github.com/aminchekov/structurizr-c4model-extension",
-                                        "master"
-                                )
-                        )
-                ))
-            }
+            IComponentRelationship.AutoScannedComponents(EComponent.ORDER_CONTROLLER.container,
+                    ComponentFinderParams(
+                            Packages(setOf("com.anmi.c4.demosystem")),
+                            Sources(setOf("src/test/java"),
+                                    LocalPathToGitUrl(
+                                            File("."),
+                                            "https://github.com/aminchekov/structurizr-c4model-extension",
+                                            "master"
+                                    )
+                            )
+                    )
+            )
     )
 }

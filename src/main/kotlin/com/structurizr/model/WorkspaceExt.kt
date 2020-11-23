@@ -6,6 +6,7 @@ import com.anmi.c4.analysis.ComponentFinderParams
 import com.anmi.c4.analysis.LocalPathToGitUrl
 import com.anmi.c4.analysis.Packages
 import com.anmi.c4.analysis.Sources
+import com.anmi.c4.config.Config
 import com.anmi.c4.config.ConfigCreator
 import com.anmi.c4.config.ConfigInstance
 import com.anmi.c4.config.StructurizrFactory
@@ -14,6 +15,7 @@ import com.anmi.c4.model.element.IContainer
 import com.anmi.c4.model.element.ITag
 import com.anmi.c4.model.element.Technology
 import com.anmi.c4.util.ScannedWorkspace
+import com.anmi.c4.util.WorkspaceUploader
 import com.structurizr.Workspace
 import com.structurizr.documentation.replaceDocumentationBy
 import com.structurizr.view.ComponentView
@@ -198,3 +200,9 @@ fun Workspace.scanComponentsWith(config: ConfigInstance, containerName: String =
     this.defaultComponentView(container)
     StructurizrFactory.client(config).putWorkspace(config.workspaceId, this)
 }
+
+fun Workspace.upload(config: Config) : Workspace {
+    WorkspaceUploader.upload(this, config)
+    return this
+}
+

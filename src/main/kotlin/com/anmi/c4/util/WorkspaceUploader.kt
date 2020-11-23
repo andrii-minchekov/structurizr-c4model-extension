@@ -1,4 +1,4 @@
-package com.anmi.c4
+package com.anmi.c4.util
 
 import com.anmi.c4.config.Config
 import com.anmi.c4.config.StructurizrFactory
