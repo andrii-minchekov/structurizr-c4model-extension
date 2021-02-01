@@ -1,6 +1,10 @@
 package com.anmi.c4.model.element
 
 enum class ITag {
+    WEB_BROWSER,
+    MOBILE_PHONE,
+    DATABASE,
+    MESSAGE_BROKER,
     E_SYSTEM_TAG,
     E_CONTAINER_TAG,
     E_COMPONENT_TAG,

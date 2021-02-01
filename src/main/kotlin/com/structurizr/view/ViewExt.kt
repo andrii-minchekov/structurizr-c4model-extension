@@ -1,15 +1,13 @@
 package com.structurizr.view
 
-import com.anmi.c4.model.element.IPerson
-import com.anmi.c4.model.element.ISystem
-import com.anmi.c4.model.element.ITag
-import com.structurizr.model.Element
-import com.structurizr.model.Model
-import com.structurizr.model.SoftwareSystem
-import com.structurizr.model.findElementByCanonicalName
-import com.structurizr.model.findRelation
-import com.structurizr.model.getPerson
-import com.structurizr.model.getSystem
+import com.anmi.c4.model.element.*
+import com.structurizr.model.*
+
+fun Styles.hideRelDescriptions(): Styles {
+    return this.apply {
+        addRelationshipStyle(Tags.RELATIONSHIP).width(1)
+    }
+}
 
 internal fun ViewSet.addComponentViews(newModel: Model, remoteComponentViews: Collection<ComponentView>) {
     val thisViews = this.componentViews!!

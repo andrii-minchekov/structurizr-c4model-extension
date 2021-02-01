@@ -1,12 +1,9 @@
 package com.anmi.c4.model.element
 
-import com.structurizr.model.Component
-import com.structurizr.model.Container
-import com.structurizr.model.getComponent
+import com.structurizr.model.*
 
 interface IComponent : IElement{
     val container: IContainer
-    val tags : Array<ITag>
     val url : String
 
     fun toModel(container: Container): Component = container.getComponent(this)

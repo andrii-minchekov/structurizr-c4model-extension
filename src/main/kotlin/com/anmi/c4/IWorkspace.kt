@@ -2,15 +2,12 @@ package com.anmi.c4
 
 import com.anmi.c4.config.Config
 import com.anmi.c4.diagram.Diagram
-import com.anmi.c4.diagram.style.Stylist
+import com.anmi.c4.diagram.style.Styling
 import com.anmi.c4.documentation.EDocumentation
 import com.anmi.c4.model.element.SystemModel
 import com.structurizr.Workspace
 import com.structurizr.model.SequentialIntegerIdGeneratorStrategy
-import com.structurizr.view.DeploymentView
-import com.structurizr.view.DynamicView
-import com.structurizr.view.StaticView
-import com.structurizr.view.View
+import com.structurizr.view.*
 
 
 interface IWorkspace {
@@ -60,7 +57,7 @@ interface IWorkspace {
         fun createEmptyWorkspace(config: Config): Workspace {
             val workspace = Workspace("Enterprise Architecture - ${config.profileName}", "This is a Software Model of Enterprise.")
             workspace.model.setIdGenerator(SequentialIntegerIdGeneratorStrategy())
-            Stylist(workspace).style()
+            Styling(workspace)()
             return workspace
         }
     }

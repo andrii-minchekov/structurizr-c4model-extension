@@ -16,7 +16,7 @@ group 'com.anmi.architecture'
 
 def buildNumber = System.getenv("CI_JOB_ID") ? System.getenv("CI_JOB_ID") : ""
 
-version "1.0.7"
+version "1.0.11"
 
 repositories {
     mavenCentral()
@@ -106,7 +106,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/aminchekov/structurizr-c4model-extension")
+            url = uri("https://maven.pkg.github.com/andrii-minchekov/structurizr-c4model-extension")
             credentials {
                 username = project.findProperty("gpr.user") ?: getGithubProps().getProperty("userName")
                 password = project.findProperty("gpr.key") ?: getGithubProps().getProperty("accessToken")

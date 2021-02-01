@@ -1,13 +1,9 @@
 package com.structurizr.model
 
 import cc.catalysts.structurizr.kotlin.ElementConfiguration
-import com.anmi.c4.model.element.IContainer
-import com.anmi.c4.model.element.IPerson
-import com.anmi.c4.model.element.ISystem
-import com.anmi.c4.model.element.ITag
-import com.structurizr.analysis.AbstractSpringComponentFinderStrategy.SPRING_REPOSITORY
-import com.structurizr.analysis.AbstractSpringComponentFinderStrategy.SPRING_REST_CONTROLLER
-import com.structurizr.analysis.AbstractSpringComponentFinderStrategy.SPRING_SERVICE
+import com.anmi.c4.model.element.*
+import com.anmi.c4.model.element.ITag.*
+import com.structurizr.analysis.AbstractSpringComponentFinderStrategy.*
 import java.lang.reflect.Constructor
 
 fun newModel(): Model {
@@ -57,18 +53,24 @@ fun Model.addSystem(system: ISystem): SoftwareSystem {
     return this.getSoftwareSystemWithName(system.label) ?: addSoftwareSystem(system)
 }
 
-private fun Model.addSoftwareSystem(system: ISystem): SoftwareSystem {
-    val list: List<String> = system.tag.map { it.name }
-    return this.addSoftwareSystem(system.location, system.label, system.description).assignTags(*list.toTypedArray())
+private fun Model.addSoftwareSystem(iSystem: ISystem): SoftwareSystem {
+    val tags: List<String> = iSystem.tags.map { it.name }
+    return this.addSoftwareSystem(iSystem.location, iSystem.label, iSystem.description).assignTags(*tags.toTypedArray(), E_SYSTEM_TAG.name)
+}
+
+fun SoftwareSystem.getContainer(iContainer: IContainer): Container {
+    return this.getContainerWithName(iContainer.label)
+            ?: this.addContainer(iContainer)
 }
 
 fun SoftwareSystem.addContainer(container: IContainer): Container {
     return this.addContainer(container) {}
 }
 
-fun SoftwareSystem.addContainer(eContainer: IContainer, init: ElementConfiguration.() -> Unit): Container {
-    val container = this.addContainer(eContainer.label, eContainer.description, eContainer.technologies.joinToString()).apply {
-        addTags(ITag.E_CONTAINER_TAG.name)
+fun SoftwareSystem.addContainer(iContainer: IContainer, init: ElementConfiguration.() -> Unit): Container {
+    val container = this.addContainer(iContainer.label, iContainer.description, iContainer.technologies.joinToString()).apply {
+        addTags(E_CONTAINER_TAG.name)
+        assignTags(iContainer.tags)
     }
     val config: ElementConfiguration = ElementConfiguration().apply(init)
     config.tags.forEach { t -> container.addTags(t) }
@@ -90,6 +92,10 @@ fun SoftwareSystem.addContainer(eContainer: IContainer, init: ElementConfigurati
     return container
 }
 
+private fun Element.assignTags(tags: Array<ITag>): Element {
+    return this.apply { addTags(*tags.map { it.name }.toTypedArray()) }
+}
+
 fun Model.tagSpringComponents() {
     this.softwareSystems.forEach {
         it.containers.forEach {
@@ -99,12 +105,6 @@ fun Model.tagSpringComponents() {
         }
     }
 }
-
-fun SoftwareSystem.getContainer(container: IContainer): Container {
-    return this.getContainerWithName(container.label)
-            ?: this.addContainer(container.label, container.description, container.technologies.joinToString())
-}
-
 
 fun Model.findRelation(sourceCanonicalName: String, destinationCanonicalName: String): Relationship {
     val filter = this.relationships.filter {

@@ -1,11 +1,7 @@
 package com.anmi.c4.model.element
 
 import com.anmi.c4.analysis.ComponentFinderParams
-import com.structurizr.model.Component
-import com.structurizr.model.SoftwareSystem
-import com.structurizr.model.addComponentsFrom
-import com.structurizr.model.getComponent
-import com.structurizr.model.getContainer
+import com.structurizr.model.*
 
 sealed class IComponentRelationship : (SoftwareSystem) -> Set<Component> {
     abstract override fun invoke(system: SoftwareSystem): Set<Component>
@@ -23,6 +19,9 @@ sealed class IComponentRelationship : (SoftwareSystem) -> Set<Component> {
         }
     }
 
+    /**
+     * Auto scanning works only if run with Java 8 so far
+     */
     class AutoScannedComponents(private val container: IContainer, private val criteria: ComponentFinderParams) : IComponentRelationship(){
         override fun invoke(system: SoftwareSystem): Set<Component> {
             return system.getContainer(container).addComponentsFrom(criteria)
