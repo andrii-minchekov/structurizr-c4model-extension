@@ -4,7 +4,6 @@ import com.anmi.c4.model.element.ITag.*
 import com.structurizr.Workspace
 import com.structurizr.model.Tags.*
 import com.structurizr.view.Shape.*
-import com.structurizr.view.hideRelDescriptions
 
 class Styling(val workspace: Workspace) {
 
@@ -38,8 +37,6 @@ class Styling(val workspace: Workspace) {
             addElementStyle(SPRING_REST_CONTROLLER.name).background("#D4F3C0").color("#000000")
             addElementStyle(SPRING_SERVICE.name).background(componentBackColor).color(componentFontColor)
             addElementStyle(SPRING_REPOSITORY.name).background("#95D46C").color("#000000")
-        }.apply {
-            hideRelDescriptions()
         }
     }
 }
