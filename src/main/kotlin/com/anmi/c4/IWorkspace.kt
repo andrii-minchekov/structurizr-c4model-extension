@@ -1,12 +1,12 @@
 package com.anmi.c4
 
 import com.anmi.c4.config.Config
-import com.anmi.c4.diagram.Diagram
+import com.anmi.c4.diagram.*
 import com.anmi.c4.diagram.style.Styling
 import com.anmi.c4.documentation.EDocumentation
 import com.anmi.c4.model.element.SystemModel
 import com.structurizr.Workspace
-import com.structurizr.model.SequentialIntegerIdGeneratorStrategy
+import com.structurizr.model.*
 import com.structurizr.view.*
 
 
@@ -14,7 +14,11 @@ interface IWorkspace {
     val cfg: Config
     val spec: ISpec
 
-    operator fun invoke() : Workspace{
+    fun upload(): Workspace {
+        return invoke().upload(cfg)
+    }
+
+    operator fun invoke(): Workspace {
         val workspace = createEmptyWorkspace(cfg)
         spec(workspace)
         EDocumentation(workspace)
@@ -24,8 +28,14 @@ interface IWorkspace {
     interface ISpec {
         val models: List<SystemModel>
         val staticDiagrams: List<Diagram<StaticView>>
+            get() = listOf(
+                    object : DefaultSystemContextDiagram(models.first().system) {},
+                    object : DefaultContainerDiagram(models.first().system) {}
+            )
         val dynamicDiagrams: List<Diagram<DynamicView>>
+            get() = emptyList()
         val deploymentDiagrams: List<Diagram<DeploymentView>>
+            get() = emptyList()
 
         operator fun invoke(workspace: Workspace) {
             runModels(workspace)

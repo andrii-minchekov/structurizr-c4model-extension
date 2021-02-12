@@ -1,14 +1,13 @@
 package com.anmi.c4.model.element
 
-import com.structurizr.model.Model
-import com.structurizr.model.SoftwareSystem
-import com.structurizr.model.getSystem
+import com.structurizr.model.*
 
 interface SystemModel {
     val system: ISystem
     val context: Array<ISystemRelationship>
     val containers: Array<IContainerRelationship>
     val components: Array<IComponentRelationship>
+        get() = emptyArray()
 
     operator fun invoke(model: Model) {
         runContext(model)
