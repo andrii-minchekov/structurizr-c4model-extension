@@ -1,29 +1,15 @@
 package com.structurizr.model
 
-import cc.catalysts.structurizr.kotlin.Dependency
-import cc.catalysts.structurizr.kotlin.ElementConfiguration
-import com.anmi.c4.analysis.ComponentFinderParams
-import com.anmi.c4.analysis.LocalPathToGitUrl
-import com.anmi.c4.analysis.Packages
-import com.anmi.c4.analysis.Sources
-import com.anmi.c4.config.Config
-import com.anmi.c4.config.ConfigCreator
-import com.anmi.c4.config.ConfigInstance
-import com.anmi.c4.config.StructurizrFactory
+import cc.catalysts.structurizr.kotlin.*
+import com.anmi.c4.analysis.*
+import com.anmi.c4.config.*
 import com.anmi.c4.diagram.ComponentDiagram.Companion.buildKey
-import com.anmi.c4.model.element.IContainer
-import com.anmi.c4.model.element.ITag
-import com.anmi.c4.model.element.Technology
-import com.anmi.c4.util.ScannedWorkspace
-import com.anmi.c4.util.WorkspaceUploader
+import com.anmi.c4.diagram.style.Stylize
+import com.anmi.c4.model.element.*
+import com.anmi.c4.util.*
 import com.structurizr.Workspace
 import com.structurizr.documentation.replaceDocumentationBy
-import com.structurizr.view.ComponentView
-import com.structurizr.view.DynamicView
-import com.structurizr.view.PaperSize
-import com.structurizr.view.View
-import com.structurizr.view.addComponentViews
-import com.structurizr.view.addDynamicViews
+import com.structurizr.view.*
 import org.slf4j.LoggerFactory
 
 fun Workspace.upload(containerName: String) {
@@ -204,5 +190,9 @@ fun Workspace.scanComponentsWith(config: ConfigInstance, containerName: String =
 fun Workspace.upload(config: Config) : Workspace {
     WorkspaceUploader.upload(this, config)
     return this
+}
+
+fun Workspace.stylize() {
+    Stylize(this)
 }
 

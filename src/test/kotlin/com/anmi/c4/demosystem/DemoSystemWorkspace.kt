@@ -13,7 +13,7 @@ class DemoSystemWorkspace(override val cfg: Config) : IWorkspace {
     override val spec = object : IWorkspace.ISpec {
         override val models = listOf(model)
         override val staticDiagrams = listOf(
-                object : DefaultSystemContextDiagram(model.system) {},
+                object : DefaultSystemContextDiagram(model.system, false) {},
                 DemoSystemContainerDiagram(model.system),
                 object : DefaultComponentDiagram(model.system, ORDER_SERVICE) {}
         )

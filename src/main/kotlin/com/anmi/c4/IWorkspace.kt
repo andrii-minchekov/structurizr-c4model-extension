@@ -2,7 +2,6 @@ package com.anmi.c4
 
 import com.anmi.c4.config.Config
 import com.anmi.c4.diagram.*
-import com.anmi.c4.diagram.style.Styling
 import com.anmi.c4.documentation.EDocumentation
 import com.anmi.c4.model.element.SystemModel
 import com.structurizr.Workspace
@@ -29,8 +28,8 @@ interface IWorkspace {
         val models: List<SystemModel>
         val staticDiagrams: List<Diagram<StaticView>>
             get() = listOf(
-                    object : DefaultSystemContextDiagram(models.first().system) {},
-                    object : DefaultContainerDiagram(models.first().system) {}
+                object : DefaultSystemContextDiagram(models.first().system) {},
+                object : DefaultContainerDiagram(models.first().system) {}
             )
         val dynamicDiagrams: List<Diagram<DynamicView>>
             get() = emptyList()
@@ -40,6 +39,7 @@ interface IWorkspace {
         operator fun invoke(workspace: Workspace) {
             runModels(workspace)
             runDiagrams(workspace)
+            workspace.stylize()
         }
 
         private fun allDiagrams(): List<Diagram<View>> {
@@ -67,7 +67,6 @@ interface IWorkspace {
         fun createEmptyWorkspace(config: Config): Workspace {
             val workspace = Workspace("Enterprise Architecture - ${config.profileName}", "This is a Software Model of Enterprise.")
             workspace.model.setIdGenerator(SequentialIntegerIdGeneratorStrategy())
-            Styling(workspace)()
             return workspace
         }
     }

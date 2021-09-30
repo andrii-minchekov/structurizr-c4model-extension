@@ -1,12 +1,10 @@
 package com.anmi.c4.diagram
 
-import com.anmi.c4.model.element.ISystem
-import com.anmi.c4.model.element.ITag
+import com.anmi.c4.model.element.*
 import com.anmi.c4.util.refine
 import com.structurizr.Workspace
 import com.structurizr.model.getSystem
-import com.structurizr.view.SystemContextView
-import com.structurizr.view.addAllElementsRelatedWith
+import com.structurizr.view.*
 
 interface SystemContextDiagram : Diagram<SystemContextView> {
 
@@ -21,7 +19,7 @@ interface SystemContextDiagram : Diagram<SystemContextView> {
     override fun draw(workspace: Workspace, vararg tag: ITag): SystemContextView {
         val system = workspace.model.getSystem(targetSystem)
         return workspace.views.createSystemContextView(system, key, "System Context Diagram of ${targetSystem.label}").apply {
-            enableAutomaticLayout()
+            if (autoLayout) enableAutomaticLayout()
             addAllElementsRelatedWith(system)
         }
     }

@@ -14,6 +14,10 @@ interface Diagram<out V : View> {
     val key: String
 
     val type: DiagramType
+
+    val autoLayout: Boolean
+        get() = true
+
     /**
      * Build relations between components regarded to the type of the diagram
      */
