@@ -19,7 +19,7 @@ interface SystemContextDiagram : Diagram<SystemContextView> {
     override fun draw(workspace: Workspace, vararg tag: ITag): SystemContextView {
         val system = workspace.model.getSystem(targetSystem)
         return workspace.views.createSystemContextView(system, key, "System Context Diagram of ${targetSystem.label}").apply {
-            if (autoLayout) enableAutomaticLayout()
+            if (autoLayoutEnabled) enableAutomaticLayout()
             addAllElementsRelatedWith(system)
         }
     }

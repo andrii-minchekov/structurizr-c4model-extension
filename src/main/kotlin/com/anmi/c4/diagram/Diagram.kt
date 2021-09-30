@@ -15,7 +15,7 @@ interface Diagram<out V : View> {
 
     val type: DiagramType
 
-    val autoLayout: Boolean
+    val autoLayoutEnabled: Boolean
         get() = true
 
     /**
