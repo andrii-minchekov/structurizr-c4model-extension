@@ -16,7 +16,7 @@ group 'com.anmi.architecture'
 
 def buildNumber = System.getenv("CI_JOB_ID") ? System.getenv("CI_JOB_ID") : ""
 
-version "1.0.15"
+version "1.0.17"
 
 repositories {
     mavenCentral()
@@ -53,7 +53,9 @@ private Properties getGithubProps(){
 
 private Properties getProps(String filePath){
     def props = new Properties()
-    file(filePath).withInputStream { props.load(it) }
+    if (file(filePath).exists()) {
+        file(filePath).withInputStream { props.load(it) }
+    }
     return props
 }
 

@@ -6,7 +6,7 @@ interface Technology {
 
     companion object {
         fun stringify(technology: Array<out Technology>): String? {
-            return technology.takeIf { it.isNotEmpty() }?.joinToString()
+            return technology.takeIf { it.isNotEmpty() }?.mapNotNull { it.label + " " + it.version }?.joinToString()
         }
     }
 }

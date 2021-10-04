@@ -68,7 +68,7 @@ fun SoftwareSystem.addContainer(container: IContainer): Container {
 }
 
 fun SoftwareSystem.addContainer(iContainer: IContainer, init: ElementConfiguration.() -> Unit): Container {
-    val container = this.addContainer(iContainer.label, iContainer.description, iContainer.technologies.joinToString()).apply {
+    val container = this.addContainer(iContainer.label, iContainer.description, Technology.stringify(iContainer.technologies)).apply {
         addTags(E_CONTAINER_TAG.name)
         assignTags(iContainer.tags)
     }
