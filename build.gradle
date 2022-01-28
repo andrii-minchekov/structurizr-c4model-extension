@@ -16,7 +16,7 @@ group 'com.anmi.architecture'
 
 def buildNumber = System.getenv("CI_JOB_ID") ? System.getenv("CI_JOB_ID") : ""
 
-version "1.0.17"
+version "1.0.18"
 
 repositories {
     mavenCentral()

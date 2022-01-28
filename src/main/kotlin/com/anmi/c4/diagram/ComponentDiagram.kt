@@ -25,7 +25,9 @@ interface ComponentDiagram : Diagram<ComponentView> {
     override fun draw(workspace: Workspace, vararg tag: ITag): ComponentView {
         val container = workspace.model.getSystem(targetSystem).getContainer(targetContainer)
         return workspace.views.createComponentView(container, key, "Component Diagram for ${targetContainer.label}").apply {
-            enableAutomaticLayout(AutomaticLayout.RankDirection.LeftRight, 300, 600, 200, false)
+            if (autoLayoutEnabled) {
+                enableAutomaticLayout(AutomaticLayout.RankDirection.LeftRight, 300, 600, 200, false)
+            }
             addElementsWithTag(container.components, *tag)
         }
     }
