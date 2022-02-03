@@ -91,7 +91,7 @@ fun View.add(person: IPerson) {
     this.add(this.model.getPerson(person))
 }
 
-fun DynamicView.add(source: Element, description: String, destination: Element, order: Int, suffix: String? = ""): RelationshipView {
+fun DynamicView.add(source: StaticStructureElement, description: String, destination: StaticStructureElement, order: Int, suffix: String? = ""): RelationshipView {
     val relationshipView = add(source, description, destination)
     relationshipView.order = "$order-$suffix"
     return relationshipView

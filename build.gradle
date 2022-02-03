@@ -16,7 +16,7 @@ group 'com.anmi.architecture'
 
 def buildNumber = System.getenv("CI_JOB_ID") ? System.getenv("CI_JOB_ID") : ""
 
-version "1.0.18"
+version "1.0.19"
 
 repositories {
     mavenCentral()
@@ -29,9 +29,9 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 }
 
 dependencies {
-    api 'cc.catalysts.structurizr:structurizr-kotlin:1.3.0.3'
-    api 'com.structurizr:structurizr-client:1.3.5'
-    api 'com.structurizr:structurizr-spring:1.3.4'
+    api 'cc.catalysts.structurizr:structurizr-kotlin:1.3.0.4'
+    api 'com.structurizr:structurizr-client:1.10.0'
+    api 'com.structurizr:structurizr-spring:1.3.5'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
 
