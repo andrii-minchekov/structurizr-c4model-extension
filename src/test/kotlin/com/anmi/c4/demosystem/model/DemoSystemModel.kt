@@ -11,6 +11,10 @@ class DemoSystemModel(override val system: ISystem = ESystem.DEMO_SYSTEM) : Syst
     override val containers = arrayOf(
             EContainer.ORDER_SERVICE.uses(EContainer.USER_SERVICE, "Obtain user information", REST)
     )
+
+    override val components = arrayOf(
+            EComponent.ORDER_CONTROLLER.uses(EComponent.ORDER_SERVICE, "Delegate calls to domain")
+    )
     //run with Java 8 to have auto scanned components in the model
 //    override val components = arrayOf(
 //            EComponent.ORDER_CONTROLLER.uses(EComponent.ORDER_SERVICE, "Delegate calls to domain"),
