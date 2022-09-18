@@ -1,19 +1,19 @@
 package com.anmi.c4.demosystem.model
 
-import com.anmi.c4.demosystem.model.ETechnology.REST
-import com.anmi.c4.model.element.*
+import com.anmi.c4.demosystem.model.DemoTechnology.REST
+import com.anmi.c4.model.element.ISystem
+import com.anmi.c4.model.element.ISystemRelationship
+import com.anmi.c4.model.element.SystemModel
 
-class DemoSystemModel(override val system: ISystem = ESystem.DEMO_SYSTEM) : SystemModel {
-    override val context = arrayOf(
-            EPerson.WEB_USER.uses(ESystem.DEMO_SYSTEM, "Uses"),
-            ESystem.DEMO_SYSTEM.uses(ESystem.THIRD_PARTY_SYSTEM, "Uses")
-    )
+class DemoSystemModel(override val system: ISystem = DemoSystem.DEMO_SYSTEM) : SystemModel {
+    override val context = emptyArray<ISystemRelationship>()
     override val containers = arrayOf(
-            EContainer.ORDER_SERVICE.uses(EContainer.USER_SERVICE, "Obtain user information", REST)
+        DemoPerson.WEB_USER.uses(DemoSystem.DEMO_SYSTEM, DemoContainer.ORDER_SERVICE, "Uses"),
+        DemoContainer.ORDER_SERVICE.uses(DemoContainer.INVENTORY_SERVICE, "Obtain user information", REST),
+        DemoContainer.INVENTORY_SERVICE.uses(DemoSystem.THIRD_PARTY_SYSTEM, "Authenticate", REST)
     )
-
     override val components = arrayOf(
-            EComponent.ORDER_CONTROLLER.uses(EComponent.ORDER_SERVICE, "Delegate calls to domain")
+        DemoComponent.ORDER_CONTROLLER.uses(DemoComponent.ORDER_SERVICE, "Delegate calls to domain")
     )
     //run with Java 8 to have auto scanned components in the model
 //    override val components = arrayOf(

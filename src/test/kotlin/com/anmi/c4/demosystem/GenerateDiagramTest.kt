@@ -1,7 +1,7 @@
 package com.anmi.c4.demosystem
 
 import com.anmi.c4.config.*
-import com.anmi.c4.demosystem.model.ESystem
+import com.anmi.c4.demosystem.model.DemoSystem
 import org.assertj.core.api.AssertionsForInterfaceTypes.assertThat
 import org.junit.jupiter.api.Test
 
@@ -13,7 +13,7 @@ class GenerateDiagramTest {
         val workspace = DemoSystemWorkspace(config).upload()
 
         StructurizrFactory.client(config).getWorkspace(config.workspaceId).apply {
-            assertThat(workspace.model.softwareSystems.firstOrNull { it.name == ESystem.DEMO_SYSTEM.label }).isNotNull()
+            assertThat(workspace.model.softwareSystems.first { it.name == DemoSystem.DEMO_SYSTEM.label }).isNotNull()
         }
     }
 }

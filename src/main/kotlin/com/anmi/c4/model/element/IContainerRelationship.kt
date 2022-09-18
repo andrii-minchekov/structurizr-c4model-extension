@@ -54,6 +54,7 @@ sealed class IContainerRelationship : (SoftwareSystem) -> Set<Container> {
         override fun invoke(system: SoftwareSystem): Set<Container> {
             return system.model.getPerson(person).run {
                 val container = system.model.getSystem(otherSystem).getContainer(otherContainer)
+                this.uses(system.model.getSystem(otherSystem), relDescription, Technology.stringify(technologies))
                 this.uses(container, relDescription, Technology.stringify(technologies))
                 setOf(container)
             }

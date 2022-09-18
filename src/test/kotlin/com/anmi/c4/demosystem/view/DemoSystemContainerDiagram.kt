@@ -1,6 +1,6 @@
 package com.anmi.c4.demosystem.view
 
-import com.anmi.c4.demosystem.model.EContainer
+import com.anmi.c4.demosystem.model.DemoContainer
 import com.anmi.c4.diagram.ContainerDiagram
 import com.anmi.c4.model.element.ISystem
 import com.anmi.c4.model.element.ITag
@@ -18,7 +18,7 @@ class DemoSystemContainerDiagram(override val targetSystem: ISystem) : Container
         containerView.paperSize = PaperSize.A4_Landscape
         containerView.enableAutomaticLayout()
         system.containers.forEach(containerView::addAllElementsRelatedWith)
-        containerView.removeRelationshipsNotConnectedToElement(system.getContainer(EContainer.ORDER_SERVICE))
+        containerView.removeRelationshipsNotConnectedToElement(system.getContainer(DemoContainer.ORDER_SERVICE))
         return containerView
     }
 }
