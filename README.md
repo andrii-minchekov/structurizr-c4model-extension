@@ -74,7 +74,7 @@ dependencies {
 As an example, the following Kotlin code can be used to create a software architecture model and an associated views that describe a user using a
 software system with 2 containers and 1 external system dependency, based upon the C4 model.
 
-![Context Diagram](https://github.com/andrii-minchekov/structurizr-c4model-extension/raw/master/src/main/resources/readme/structurizr-demo-system_context.png) ![Container Diagram](https://github.com/andrii-minchekov/structurizr-c4model-extension/raw/master/src/main/resources/readme/structurizr-demo-system_container.png)
+![Context and Container Diagram](https://github.com/andrii-minchekov/structurizr-c4model-extension/raw/master/src/main/resources/readme/C4-context-container.png)
 
 #### Model definition
 
