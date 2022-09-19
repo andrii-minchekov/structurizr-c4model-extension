@@ -42,7 +42,7 @@ Add GithubPackages maven repository credentials to your settings.xml file
     <server>
         <id>GithubPackages</id>
         <username>andrii-minchekov</username>
-        <password>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</password>
+        <password>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</password>
     </server>
 </servers>
 ```
@@ -55,7 +55,7 @@ repositories {
         url "https://maven.pkg.github.com/andrii-minchekov/structurizr-c4model-extension"
         credentials {
             username "andrii-minchekov"
-            password "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"
+            password "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"
         }
     }
 }
