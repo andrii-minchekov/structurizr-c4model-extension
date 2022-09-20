@@ -21,6 +21,9 @@ enum class CommonTechnology(override val label: String, override var version: St
     WEB_SOCKET("WebSocket"),
     R_SOCKET("RSocket"),
     IBM_MQ("IBM MQ"),
+    AWS_S3("AWS S3"),
+    AWS_SQS("AWS SQS"),
+    AWS_RDS_POSTGRES("AWS RDS for PostgreSQL", "14"),
     AWS_KINESIS("AWS Kinesis", "2"),
     KAFKA("Kafka", "2"),
     ELASTIC_SEARCH("Elasticsearch", "6.5.4"),
@@ -29,6 +32,8 @@ enum class CommonTechnology(override val label: String, override var version: St
     FLUTTER("Flutter SDK"),
     GO("Golang", "1.15.2"),
     PYTHON_3_10("Python", "3.10.x"),
+    DJANGO_4("Django web framework", "4.0.x"),
+    TYPE_SCRIPT_4("TypeScript",  "4.4.x"),
     REACTJS("ReactJS", ""),
     ANGULAR("Angular JS", "10.0.3");
 
