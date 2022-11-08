@@ -7,3 +7,4 @@ tests-output/
 out/
 repo
 doc
+.DS_Store

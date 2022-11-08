@@ -2,7 +2,7 @@ package com.anmi.c4.model.element
 
 enum class CommonTechnology(override val label: String, override var version: String = "") : Technology {
     JAVA_11("Java", "11"),
-    JAVA_17("Java", "11"),
+    JAVA_17("Java", "17"),
     GRPC("gRPC"),
     THRIFT("Apache Thrift"),
     SPRING_BOOT_2_1("Spring Boot", "2.1"),
@@ -21,8 +21,8 @@ enum class CommonTechnology(override val label: String, override var version: St
     WEB_SOCKET("WebSocket"),
     R_SOCKET("RSocket"),
     IBM_MQ("IBM MQ"),
-    AWS_S3("AWS S3"),
-    AWS_SQS("AWS SQS"),
+    AWS_S3("AWS S3", "Amazon Simple Storage Service"),
+    AWS_SQS("AWS SQS", "Amazon Simple Queue Service"),
     AWS_RDS_POSTGRES("AWS RDS for PostgreSQL", "14"),
     AWS_KINESIS("AWS Kinesis", "2"),
     KAFKA("Kafka", "2"),
@@ -33,8 +33,9 @@ enum class CommonTechnology(override val label: String, override var version: St
     GO("Golang", "1.15.2"),
     PYTHON_3_10("Python", "3.10.x"),
     DJANGO_4("Django web framework", "4.0.x"),
-    TYPE_SCRIPT_4("TypeScript",  "4.4.x"),
+    TYPE_SCRIPT_4("TypeScript", "4.4.x"),
     REACTJS("ReactJS", ""),
+    REACT_NATIVE("React Native", ""),
     ANGULAR("Angular JS", "10.0.3");
 
     override fun toString(): String {
