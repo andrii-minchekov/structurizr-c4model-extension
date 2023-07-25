@@ -8,7 +8,7 @@ import com.anmi.c4.model.element.SystemModel
 class DemoSystemModel(override val system: ISystem = DemoSystem.DEMO_SYSTEM) : SystemModel {
     override val context = emptyArray<ISystemRelationship>()
     override val containers = arrayOf(
-        DemoPerson.WEB_USER.uses(DemoSystem.DEMO_SYSTEM, DemoContainer.ORDER_SERVICE, "Uses"),
+        DemoPerson.WEB_USER.uses(DemoContainer.ORDER_SERVICE, "Uses"),
         DemoContainer.ORDER_SERVICE.uses(DemoContainer.INVENTORY_SERVICE, "Obtain user information", REST),
         DemoContainer.INVENTORY_SERVICE.uses(DemoSystem.THIRD_PARTY_SYSTEM, "Authenticate", REST)
     )

@@ -28,7 +28,7 @@ published sources to an existing system context and containers modelled with thi
         <dependency>
             <groupId>com.anmi.architecture</groupId>
             <artifactId>c4-model-extension</artifactId>
-            <version>1.0.21</version>
+            <version>1.0.22</version>
         </dependency>
     </dependencies>
 </project>

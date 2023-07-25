@@ -9,8 +9,17 @@ interface ISystem : IElement {
         return ISystemRelationship.System2System(this, otherSystem, relDescription, arrayOf(*technology))
     }
 
+    @Deprecated(
+        message = "No reason to have ISystem as a parameter, use more short method from this interface",
+        level = DeprecationLevel.WARNING,
+        replaceWith = ReplaceWith("uses(otherContainer: IContainer, relDescription: String, vararg technology: Technology)")
+    )
     fun uses(otherSystem: ISystem, otherContainer: IContainer, relDescription: String, vararg technology: Technology): IContainerRelationship {
-        return IContainerRelationship.SystemToContainer(this, otherSystem, otherContainer, relDescription, arrayOf(*technology))
+        return IContainerRelationship.SystemToContainer(this, otherContainer, relDescription, arrayOf(*technology))
+    }
+
+    fun uses(otherContainer: IContainer, relDescription: String, vararg technology: Technology): IContainerRelationship {
+        return IContainerRelationship.SystemToContainer(this, otherContainer, relDescription, arrayOf(*technology))
     }
 
 }

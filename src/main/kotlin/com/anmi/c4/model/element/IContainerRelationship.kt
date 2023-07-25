@@ -40,21 +40,21 @@ sealed class IContainerRelationship : (SoftwareSystem) -> Set<Container> {
         }
     }
 
-    class SystemToContainer(private val source: ISystem, private val targetSystem: ISystem, private val targetContainer: IContainer,
+    class SystemToContainer(private val source: ISystem, private val targetContainer: IContainer,
                             private val desc: String, private val technologies: Array<Technology>) : IContainerRelationship() {
         override fun invoke(system: SoftwareSystem): Set<Container> {
-            val container = system.model.getSystem(targetSystem).getContainer(targetContainer)
+            val container = system.model.getSystem(targetContainer.system).getContainer(targetContainer)
             system.model.getSystem(source).uses(container, desc, Technology.stringify(technologies))
             return setOf(container)
         }
     }
 
-    class Person2Container(private val person: IPerson, private val otherSystem: ISystem, private val otherContainer: IContainer,
+    class Person2Container(private val person: IPerson, private val otherContainer: IContainer,
                            private val relDescription: String, private val technologies: Array<Technology>) : IContainerRelationship() {
         override fun invoke(system: SoftwareSystem): Set<Container> {
             return system.model.getPerson(person).run {
-                val container = system.model.getSystem(otherSystem).getContainer(otherContainer)
-                this.uses(system.model.getSystem(otherSystem), relDescription, Technology.stringify(technologies))
+                val container = system.model.getSystem(otherContainer.system).getContainer(otherContainer)
+                this.uses(system.model.getSystem(otherContainer.system), relDescription, Technology.stringify(technologies))
                 this.uses(container, relDescription, Technology.stringify(technologies))
                 setOf(container)
             }
