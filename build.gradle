@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.3.61'
+    ext.kotlin_version = '1.4.10'
     repositories {
         mavenCentral()
     }
@@ -16,13 +16,19 @@ group 'com.anmi.architecture'
 
 def buildNumber = System.getenv("CI_JOB_ID") ? System.getenv("CI_JOB_ID") : ""
 
-version "2.0.0"
+version "2.1.0"
 
 repositories {
     mavenCentral()
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+compileTestKotlin {
     kotlinOptions {
         jvmTarget = "1.8"
     }
@@ -32,6 +38,7 @@ dependencies {
     api 'cc.catalysts.structurizr:structurizr-kotlin:1.3.0.4'
     api 'com.structurizr:structurizr-client:1.10.0'
     api 'com.structurizr:structurizr-spring:1.3.5'
+    api 'com.structurizr:structurizr-export:1.3.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
 
@@ -77,23 +84,23 @@ tasks.withType(Test) {
 }
 
 task publishArchModelToCloudProd(type: JavaExec) {
-    main = "com.anmi.c4.Runner"
+    mainClass.set("com.anmi.c4.Runner")
     classpath(
-            sourceSets.main.runtimeClasspath
+            sourceSets.test.runtimeClasspath
     )
     args = ["PROD"]
 }
 
 task publishArchModelToCloudTest(type: JavaExec) {
-    main = "com.anmi.c4.Runner"
+    mainClass.set("com.anmi.c4.Runner")
     classpath(
-            sourceSets.main.runtimeClasspath
+            sourceSets.test.runtimeClasspath
     )
     args = ["TEST"]
 }
 
 task exportWsdToPuml(type: JavaExec) {
-    main = "com.anmi.puml.WsdToPumlExport"
+    mainClass.set("com.anmi.puml.WsdToPumlExport")
     classpath(
             sourceSets.main.runtimeClasspath
     )

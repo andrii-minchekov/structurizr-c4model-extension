@@ -2,9 +2,11 @@ package com.anmi.c4.demosystem
 
 import com.anmi.c4.IWorkspace
 import com.anmi.c4.config.Config
-import com.anmi.c4.demosystem.DemoContainer.*
-import com.anmi.c4.demosystem.DemoPerson.*
-import com.anmi.c4.demosystem.DemoSystem.*
+import com.anmi.c4.demosystem.DemoContainer.INVENTORY_SERVICE
+import com.anmi.c4.demosystem.DemoContainer.ORDER_SERVICE
+import com.anmi.c4.demosystem.DemoPerson.WEB_USER
+import com.anmi.c4.demosystem.DemoSystem.DEMO_SYSTEM
+import com.anmi.c4.demosystem.DemoSystem.THIRD_PARTY_SYSTEM
 import com.anmi.c4.demosystem.model.DemoTechnology.*
 import com.anmi.c4.model.element.*
 import com.structurizr.model.Location
@@ -18,11 +20,12 @@ class DemoSystemWorkspaceSingleClass(override val cfg: Config) : IWorkspace {
 class DemoSystemModel(override val system: ISystem = DEMO_SYSTEM) : SystemModel {
     override val context = emptyArray<ISystemRelationship>()
     override val containers = arrayOf(
-        WEB_USER.uses(DEMO_SYSTEM, ORDER_SERVICE, "Uses"),
+        WEB_USER.uses(ORDER_SERVICE, "Uses"),
         ORDER_SERVICE.uses(INVENTORY_SERVICE, "Obtain inventory", REST),
         INVENTORY_SERVICE.uses(THIRD_PARTY_SYSTEM, "Check suppliers", REST)
     )
 }
+
 enum class DemoSystem(
     override val location: Location, override val label: String, override val description: String, override val tags: Array<ITag> = emptyArray()
 ) : ISystem {
