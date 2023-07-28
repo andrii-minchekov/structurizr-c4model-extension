@@ -6,36 +6,31 @@ import com.structurizr.Workspace
 import com.structurizr.io.plantuml.StructurizrPlantUMLExporter
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import java.io.BufferedWriter
 import java.io.File
-import java.net.URL
-import java.nio.charset.StandardCharsets
 import java.nio.file.Files
 import java.nio.file.Path
-import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
 
 
 class CopyRemoteWorkspaceToLocalRunner {
+
     companion object {
 
         private val logger: Logger = LoggerFactory.getLogger(CopyRemoteWorkspaceToLocalRunner::class.java)
 
         @JvmStatic
-        fun run(workspaceCfg: Config, destinationSubFolder: String = "src/main/resources/documentation") {
-            copyFromRemoteToLocal(workspaceCfg, destinationSubFolder)
+        fun run(workspaceCfg: Config, destinationSubDirPath: String = "src/main/resources/documentation"): Workspace {
+            return copyFromRemoteToLocal(workspaceCfg, destinationSubDirPath)
         }
 
-        fun copyFromRemoteToLocal(config: Config, destinationDirPrefix: String, ) {
+        fun copyFromRemoteToLocal(config: Config, subDirPath: String): Workspace {
             val workspace = takeWorkspaceFromRemote(config)
 
-            workspace.model.softwareSystems.forEach { ss ->
-                workspace.views.containerViews.firstOrNull() { view -> view.softwareSystem.name == ss.name }?.let {
-                    val targetDirPath = Files.createDirectories(Paths.get(projectRootDir(), destinationDirPrefix, it.key))
-                    copyWorkspaceJsonToResourceDir(targetDirPath, config.archiveLocation, workspace.id)
-                    exportAllViewsToPlantUmlFiles(workspace, targetDirPath)
-                }
-            }
+            val targetDirPath = FileUtils.projectRootDirPlusSubDir(subDirPath, workspace)
+
+            copyWorkspaceJsonToResourceDir(targetDirPath, config.archiveLocation, workspace.id)
+            exportAllViewsToPlantUmlFiles(workspace, targetDirPath)
+            return workspace
         }
 
         private fun takeWorkspaceFromRemote(config: Config): Workspace {
@@ -56,7 +51,7 @@ class CopyRemoteWorkspaceToLocalRunner {
             val outputPath = targetDirPath.toString()
             for (diagram in diagrams) {
                 var file = File(outputPath, java.lang.String.format("%s-%s.%s", prefix(workspaceId), diagram.key, fileExt))
-                writeToFile(file, diagram.definition)
+                FileUtils.writeToFile(file, diagram.definition)
                 if (diagram.frames.isNotEmpty()) {
                     var index = 1
                     for (frame in diagram.frames) {
@@ -64,20 +59,11 @@ class CopyRemoteWorkspaceToLocalRunner {
                             outputPath,
                             java.lang.String.format("%s-%s-%s.%s", prefix(workspaceId), diagram.key, index, fileExt)
                         )
-                        writeToFile(file, frame.definition)
+                        FileUtils.writeToFile(file, frame.definition)
                         index++
                     }
                 }
             }
-        }
-
-        @Throws(Exception::class)
-        private fun writeToFile(file: File, content: String) {
-            logger.info(" - writing " + file.getCanonicalPath())
-            val writer: BufferedWriter = Files.newBufferedWriter(file.toPath(), StandardCharsets.UTF_8)
-            writer.write(content)
-            writer.flush()
-            writer.close()
         }
 
         private fun copyWorkspaceJsonToResourceDir(targetDirPath: Path, sourceDirPath: String, workspaceId: Long) {
@@ -89,12 +75,6 @@ class CopyRemoteWorkspaceToLocalRunner {
                 Files.copy(lastFile.toPath(), targetFilePath, StandardCopyOption.REPLACE_EXISTING)
                 logger.info("Structurizr workspace json copied to: $targetFilePath")
             }
-        }
-
-        private fun projectRootDir(): String {
-            val rootURL: URL? = this::class.java.getResource("/")
-            val rootDir = File(rootURL!!.path).parentFile.parentFile.parentFile.parentFile.path
-            return rootDir
         }
 
         private fun prefix(workspaceId: Long): String {

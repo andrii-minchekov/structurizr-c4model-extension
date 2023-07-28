@@ -16,7 +16,7 @@ group 'com.anmi.architecture'
 
 def buildNumber = System.getenv("CI_JOB_ID") ? System.getenv("CI_JOB_ID") : ""
 
-version "2.1.1"
+version "2.1.2"
 
 repositories {
     mavenCentral()
@@ -38,7 +38,7 @@ dependencies {
     api 'cc.catalysts.structurizr:structurizr-kotlin:1.3.0.4'
     api 'com.structurizr:structurizr-client:1.10.0'
     api 'com.structurizr:structurizr-spring:1.3.5'
-    implementation 'com.structurizr:structurizr-export:1.3.0'
+    api 'com.structurizr:structurizr-export:1.3.0'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
     implementation 'org.jetbrains.kotlin:kotlin-reflect'
 

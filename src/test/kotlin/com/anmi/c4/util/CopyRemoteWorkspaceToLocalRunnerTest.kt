@@ -7,6 +7,8 @@ class CopyRemoteWorkspaceToLocalRunnerTest {
 
     @Test
     fun `should copy remote workspace to local dir`() {
-        CopyRemoteWorkspaceToLocalRunner.run(ConfigInstance.TEST, "build/resources/test/documentation")
+        val destinationSubFolder = "build/resources/test/documentation"
+        val workspace = CopyRemoteWorkspaceToLocalRunner.run(ConfigInstance.TEST, destinationSubFolder)
+        ExportTechStackFromModelToFile.export(workspace, destinationSubFolder)
     }
 }
