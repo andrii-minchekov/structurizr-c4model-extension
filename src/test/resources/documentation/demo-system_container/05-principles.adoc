@@ -7,8 +7,15 @@ This section provides information about the principles adopted for the developme
 
 === Package by Component
 
-image::demo-system_container/package-by-component-with-clean-modules.png[Sunset]
+image::demo-system_container/package-by-component-with-clean-modules.png[test_wrong_path_placeholder]
 
+**
+
+image::containers.png[containers]
+
+image::images/containers.png[images/containers]
+
+**
 
 === Configuration
 
