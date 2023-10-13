@@ -10,7 +10,7 @@ import java.net.URL
 
 private const val DOC_BASE_DIR = "documentation"
 
-class EDocumentation(workspace: Workspace) {
+class ADocumentation(workspace: Workspace) {
 
     private val template = AutomaticDocumentationTemplate(workspace)
 

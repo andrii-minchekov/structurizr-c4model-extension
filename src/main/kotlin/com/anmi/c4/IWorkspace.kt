@@ -1,12 +1,19 @@
 package com.anmi.c4
 
 import com.anmi.c4.config.Config
-import com.anmi.c4.diagram.*
-import com.anmi.c4.documentation.EDocumentation
+import com.anmi.c4.diagram.DefaultContainerDiagram
+import com.anmi.c4.diagram.DefaultSystemContextDiagram
+import com.anmi.c4.diagram.Diagram
+import com.anmi.c4.documentation.ADocumentation
 import com.anmi.c4.model.element.SystemModel
 import com.structurizr.Workspace
-import com.structurizr.model.*
-import com.structurizr.view.*
+import com.structurizr.model.SequentialIntegerIdGeneratorStrategy
+import com.structurizr.model.stylize
+import com.structurizr.model.upload
+import com.structurizr.view.DeploymentView
+import com.structurizr.view.DynamicView
+import com.structurizr.view.StaticView
+import com.structurizr.view.View
 
 
 interface IWorkspace {
@@ -20,7 +27,7 @@ interface IWorkspace {
     operator fun invoke(): Workspace {
         val workspace = createEmptyWorkspace(cfg)
         spec(workspace)
-        EDocumentation(workspace)
+        ADocumentation(workspace)
         return workspace
     }
 

@@ -29,7 +29,7 @@ class DemoSystemModel(override val system: ISystem = DEMO_SYSTEM) : SystemModel 
 enum class DemoSystem(
     override val location: Location, override val label: String, override val description: String, override val tags: Array<ITag> = emptyArray()
 ) : ISystem {
-    DEMO_SYSTEM(Location.Internal, "Demo System", "Demo System description", arrayOf(ITag.OTHER_SYSTEMS_TAG)),
+    DEMO_SYSTEM(Location.Internal, "Demo System", "Demo System description", arrayOf(ATag.OTHER_SYSTEMS_TAG)),
     THIRD_PARTY_SYSTEM(Location.External, "Third Party System", "Third Party System API"),
 }
 

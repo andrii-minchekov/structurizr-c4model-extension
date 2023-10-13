@@ -1,7 +1,8 @@
 package com.anmi.c4.demosystem.model
 
-import com.anmi.c4.model.element.*
-import com.anmi.c4.model.element.ITag.OTHER_SYSTEMS_TAG
+import com.anmi.c4.model.element.ATag.OTHER_SYSTEMS_TAG
+import com.anmi.c4.model.element.ISystem
+import com.anmi.c4.model.element.ITag
 import com.structurizr.model.Location
 
 enum class DemoSystem(override val location: Location, override val label: String, override val description: String, override val tags: Array<ITag> = emptyArray()) : ISystem {

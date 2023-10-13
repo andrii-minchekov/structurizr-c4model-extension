@@ -1,6 +1,6 @@
 package com.anmi.c4.diagram.style
 
-import com.anmi.c4.model.element.ITag.*
+import com.anmi.c4.model.element.ATag.*
 import com.structurizr.Workspace
 import com.structurizr.model.Location
 import com.structurizr.model.Tags.*
@@ -18,14 +18,14 @@ fun Stylize(workspace: Workspace) {
     workspace.views.configuration.styles.apply {
         addElementStyle(PERSON).background("#77559E").color(whiteColor).shape(Person)
     }.apply {
-        addElementStyle(E_SYSTEM_TAG.name).background(systemBackColor).color(whiteColor)
+        addElementStyle(A_SYSTEM_TAG.name).background(systemBackColor).color(whiteColor)
         addElementStyle(SOFTWARE_SYSTEM).background(systemBackColor).color(whiteColor)
         addElementStyle(OTHER_SYSTEMS_TAG.name).background(otherSystemBackColor).color(whiteColor)
     }.apply {
-        addElementStyle(E_CONTAINER_TAG.name).background(containerBackColor).color(whiteColor)
+        addElementStyle(A_CONTAINER_TAG.name).background(containerBackColor).color(whiteColor)
         addElementStyle(CONTAINER).background(containerBackColor).color(whiteColor)
     }.apply {
-        addElementStyle(E_COMPONENT_TAG.name).background(componentBackColor).color(componentFontColor)
+        addElementStyle(A_COMPONENT_TAG.name).background(componentBackColor).color(componentFontColor)
         addElementStyle(COMPONENT).background(componentBackColor).color(componentFontColor)
     }.apply {
         addElementStyle(MOBILE_PHONE.name).shape(MobileDevicePortrait)

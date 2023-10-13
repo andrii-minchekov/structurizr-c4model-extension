@@ -2,7 +2,6 @@ package com.structurizr.model
 
 import cc.catalysts.structurizr.kotlin.ElementConfiguration
 import com.anmi.c4.model.element.*
-import com.anmi.c4.model.element.ITag.*
 import com.structurizr.analysis.AbstractSpringComponentFinderStrategy.*
 import java.lang.reflect.Constructor
 
@@ -28,12 +27,12 @@ fun SoftwareSystem.assignTags(vararg tags: String): SoftwareSystem {
 }
 
 fun SoftwareSystem.assignTags(vararg tags: ITag): SoftwareSystem {
-    this.addTags(*tags.map { it.name }.toTypedArray())
+    this.addTags(*tags.map { it.label }.toTypedArray())
     return this
 }
 
 fun Relationship.assignTags(vararg tags: ITag): Relationship {
-    this.addTags(*tags.map { it.name }.toTypedArray())
+    this.addTags(*tags.map { it.label }.toTypedArray())
     return this
 }
 
@@ -54,8 +53,8 @@ fun Model.addSystem(system: ISystem): SoftwareSystem {
 }
 
 private fun Model.addSoftwareSystem(iSystem: ISystem): SoftwareSystem {
-    val tags: List<String> = iSystem.tags.map { it.name }
-    return this.addSoftwareSystem(iSystem.location, iSystem.label, iSystem.description).assignTags(*tags.toTypedArray(), E_SYSTEM_TAG.name)
+    val tags: List<String> = iSystem.tags.map { it.label }
+    return this.addSoftwareSystem(iSystem.location, iSystem.label, iSystem.description).assignTags(*tags.toTypedArray(), ATag.A_SYSTEM_TAG.label)
 }
 
 fun SoftwareSystem.getContainer(iContainer: IContainer): Container {
@@ -69,7 +68,7 @@ fun SoftwareSystem.addContainer(container: IContainer): Container {
 
 fun SoftwareSystem.addContainer(iContainer: IContainer, init: ElementConfiguration.() -> Unit): Container {
     val container = this.addContainer(iContainer.label, iContainer.description, Technology.stringify(iContainer.technologies)).apply {
-        addTags(E_CONTAINER_TAG.name)
+        addTags(ATag.A_CONTAINER_TAG.label)
         assignTags(iContainer.tags)
     }
     val config: ElementConfiguration = ElementConfiguration().apply(init)
@@ -93,15 +92,15 @@ fun SoftwareSystem.addContainer(iContainer: IContainer, init: ElementConfigurati
 }
 
 private fun Element.assignTags(tags: Array<ITag>): Element {
-    return this.apply { addTags(*tags.map { it.name }.toTypedArray()) }
+    return this.apply { addTags(*tags.map { it.label }.toTypedArray()) }
 }
 
 fun Model.tagSpringComponents() {
     this.softwareSystems.forEach {
         it.containers.forEach {
-            it.components.filter { c -> c.technology == SPRING_REST_CONTROLLER }.forEach { c -> c.addTags(ITag.SPRING_REST_CONTROLLER.name) }
-            it.components.filter { c -> c.technology == SPRING_SERVICE }.forEach { c -> c.addTags(ITag.SPRING_SERVICE.name) }
-            it.components.filter { c -> c.technology == SPRING_REPOSITORY }.forEach { c -> c.addTags(ITag.SPRING_REPOSITORY.name) }
+            it.components.filter { c -> c.technology == SPRING_REST_CONTROLLER }.forEach { c -> c.addTags(ATag.SPRING_REST_CONTROLLER.label) }
+            it.components.filter { c -> c.technology == SPRING_SERVICE }.forEach { c -> c.addTags(ATag.SPRING_SERVICE.label) }
+            it.components.filter { c -> c.technology == SPRING_REPOSITORY }.forEach { c -> c.addTags(ATag.SPRING_REPOSITORY.label) }
         }
     }
 }

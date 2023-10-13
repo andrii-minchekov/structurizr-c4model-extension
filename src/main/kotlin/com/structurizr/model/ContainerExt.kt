@@ -59,7 +59,7 @@ fun Container.enrichComponentsFrom(components: Set<Component>) {
     }
 }
 fun Container.assignTags(vararg tags: ITag): Container {
-    return assignTags(*tags.map { it.name }.toTypedArray())
+    return assignTags(*tags.map { it.label }.toTypedArray())
 }
 fun Container.assignTags(vararg tags: String): Container {
     this.addTags(*tags)

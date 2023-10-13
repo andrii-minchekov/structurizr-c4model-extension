@@ -1,6 +1,8 @@
 package com.structurizr.view
 
-import com.anmi.c4.model.element.*
+import com.anmi.c4.model.element.IPerson
+import com.anmi.c4.model.element.ISystem
+import com.anmi.c4.model.element.ITag
 import com.structurizr.model.*
 
 fun Styles.hideRelDescriptions(): Styles {
@@ -106,7 +108,7 @@ fun View.addElementsWithTag(elements: Set<Element>, vararg tags: ITag) {
             else -> {
                 tags.forEach { tag ->
                     when {
-                        element.hasTag(tag.name) -> this.add(element)
+                        element.hasTag(tag.label) -> this.add(element)
                     }
                 }
             }

@@ -1,12 +1,22 @@
 package com.structurizr.model
 
-import cc.catalysts.structurizr.kotlin.*
-import com.anmi.c4.analysis.*
-import com.anmi.c4.config.*
+import cc.catalysts.structurizr.kotlin.Dependency
+import cc.catalysts.structurizr.kotlin.ElementConfiguration
+import com.anmi.c4.analysis.ComponentFinderParams
+import com.anmi.c4.analysis.LocalPathToGitUrl
+import com.anmi.c4.analysis.Packages
+import com.anmi.c4.analysis.Sources
+import com.anmi.c4.config.Config
+import com.anmi.c4.config.ConfigCreator
+import com.anmi.c4.config.ConfigInstance
+import com.anmi.c4.config.StructurizrFactory
 import com.anmi.c4.diagram.ComponentDiagram.Companion.buildKey
 import com.anmi.c4.diagram.style.Stylize
-import com.anmi.c4.model.element.*
-import com.anmi.c4.util.*
+import com.anmi.c4.model.element.IContainer
+import com.anmi.c4.model.element.ITag
+import com.anmi.c4.model.element.Technology
+import com.anmi.c4.util.ScannedWorkspace
+import com.anmi.c4.util.WorkspaceUploader
 import com.structurizr.Workspace
 import com.structurizr.documentation.replaceDocumentationBy
 import com.structurizr.view.*
@@ -172,7 +182,7 @@ fun ElementConfiguration.uses(element: Element, description: String, vararg tech
 }
 
 fun ElementConfiguration.withTags(vararg tag: ITag) {
-    this.tags.addAll(tag.map { it.name })
+    this.tags.addAll(tag.map { it.label })
 }
 
 fun ElementConfiguration.usedBy(element: Element, description: String, vararg technologies: Technology, interactionStyle: InteractionStyle? = null) {
