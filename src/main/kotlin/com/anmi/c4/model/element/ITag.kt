@@ -1,20 +1,17 @@
 package com.anmi.c4.model.element
 
 enum class ATag(override val label: String) : ITag {
-    WEB_BROWSER("WEB_BROWSER"),
-    MOBILE_PHONE("MOBILE_PHONE"),
-    DATABASE("DATABASE"),
-    MESSAGE_BROKER("MESSAGE_BROKER"),
-    A_SYSTEM_TAG("A_SYSTEM_TAG"),
-    A_CONTAINER_TAG("A_CONTAINER_TAG"),
-    A_COMPONENT_TAG("A_COMPONENT_TAG"),
-    OTHER_SYSTEMS_TAG("OTHER_SYSTEMS_TAG"),
+    WEB_BROWSER("Web Browser"),
+    MOBILE_PHONE("Mobile Phone"),
+    DATABASE("Database"),
+    MESSAGE_BROKER("Message Broker"),
+    EXTERNAL_SYSTEM("External Software System"),
 
-    ERD_COMPONENT("ERD_COMPONENT"),
-    STATE_COMPONENT("STATE_COMPONENT"),
-    SPRING_REST_CONTROLLER("SPRING_REST_CONTROLLER"),
-    SPRING_SERVICE("SPRING_SERVICE"),
-    SPRING_REPOSITORY("SPRING_REPOSITORY")
+    ERD_COMPONENT("ERD Component"),
+    STATE_COMPONENT("State Component"),
+    SPRING_REST_CONTROLLER("Spring Rest Controller"),
+    SPRING_SERVICE("Spring Service"),
+    SPRING_REPOSITORY("Spring Repository")
 }
 
 interface ITag {

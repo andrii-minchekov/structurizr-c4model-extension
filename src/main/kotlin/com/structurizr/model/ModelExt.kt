@@ -54,7 +54,7 @@ fun Model.addSystem(system: ISystem): SoftwareSystem {
 
 private fun Model.addSoftwareSystem(iSystem: ISystem): SoftwareSystem {
     val tags: List<String> = iSystem.tags.map { it.label }
-    return this.addSoftwareSystem(iSystem.location, iSystem.label, iSystem.description).assignTags(*tags.toTypedArray(), ATag.A_SYSTEM_TAG.label)
+    return this.addSoftwareSystem(iSystem.location, iSystem.label, iSystem.description).assignTags(*tags.toTypedArray())
 }
 
 fun SoftwareSystem.getContainer(iContainer: IContainer): Container {
@@ -68,7 +68,6 @@ fun SoftwareSystem.addContainer(container: IContainer): Container {
 
 fun SoftwareSystem.addContainer(iContainer: IContainer, init: ElementConfiguration.() -> Unit): Container {
     val container = this.addContainer(iContainer.label, iContainer.description, Technology.stringify(iContainer.technologies)).apply {
-        addTags(ATag.A_CONTAINER_TAG.label)
         assignTags(iContainer.tags)
     }
     val config: ElementConfiguration = ElementConfiguration().apply(init)
