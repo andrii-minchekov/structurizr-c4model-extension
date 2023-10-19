@@ -19,6 +19,12 @@ sealed class IComponentRelationship : (SoftwareSystem) -> Set<Component> {
         }
     }
 
+    class Standalone(private val component: IComponent) : IComponentRelationship() {
+        override fun invoke(system: SoftwareSystem): Set<Component> {
+            return setOf(system.getContainer(component.container).addComponent(component))
+        }
+    }
+
     /**
      * Auto scanning works only if run with Java 8 so far
      */

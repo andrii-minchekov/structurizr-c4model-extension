@@ -45,6 +45,12 @@ fun Container.linkComponentsWithCode(param: LocalPathToGitUrl) {
 }
 
 fun Container.getComponent(component: IComponent): Component {
+    return this.addComponent(component)
+}
+
+
+
+fun Container.addComponent(component: IComponent): Component {
     return this.getComponentWithName(component.label) ?: this.addComponent(component.label, component.description).assignTags(*component.tags).assignUrl(component.url)
 }
 
