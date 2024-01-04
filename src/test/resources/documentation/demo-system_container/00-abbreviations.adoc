@@ -1,0 +1,15 @@
+== Definitions, Acronyms, and Abbreviations
+
+. API: Application Programming Interface
+. CRUD: Create, Read, Update, Delete
+. EDIFACT: Electronic Data Interchange for Administration, Commerce and Transport
+. FHIR: Fast Healthcare Interoperability Resources
+. HTTPS: Hypertext Transfer Protocol Secure
+. NHS: The National Health Service in UK
+. PDS: Personal Demographics Service
+. PSP: Payment Service Provider
+. AWS: Amazon Web Services
+. BaaS: Backend as a Service
+. Supabase: An open-source Firebase alternative that provides various development capabilities, including relational database, authentication and security.
+. Auth: Authentication
+. JWT: JSON Web Tokens, a method for securely transmitting information between parties as a JSON object.

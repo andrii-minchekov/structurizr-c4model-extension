@@ -1,0 +1,185 @@
+[.text-center]
+= Solution Architecture Document
+:doctype: book
+:toc: preamble
+
+[.text-center]
+[discrete]
+== *Demo System*
+
+[.text-center]
+Document version: 1.0, October 20, 2023, Company: https://example.com/[EXAMPLE]
+
+<<< 
+
+== Definitions, Acronyms, and Abbreviations
+
+. API: Application Programming Interface
+. CRUD: Create, Read, Update, Delete
+. EDIFACT: Electronic Data Interchange for Administration, Commerce and Transport
+. FHIR: Fast Healthcare Interoperability Resources
+. HTTPS: Hypertext Transfer Protocol Secure
+. NHS: The National Health Service in UK
+. PDS: Personal Demographics Service
+. PSP: Payment Service Provider
+. AWS: Amazon Web Services
+. BaaS: Backend as a Service
+. Supabase: An open-source Firebase alternative that provides various development capabilities, including relational database, authentication and security.
+. Auth: Authentication
+. JWT: JSON Web Tokens, a method for securely transmitting information between parties as a JSON object.
+
+
+<<< 
+
+== Context
+
+[small]
+----
+This section answers the following types of questions: 1) what is this software system all about?; 2) what is it that’s being built?; 3) how does it fit into the existing environment (e.g. systems, business processes, etc)?; 4) who is using it (users, roles, actors, personas, etc)?
+----
+
+
+
+
+
+
+
+<<< 
+
+== Functional Overview
+
+[small]
+----
+This section provides a short overview of the System from a business perspective, pethaps including wireframes, UI mockups, screenshots, workflow giagrams, business process diagrams, etc.
+----
+
+
+<<< 
+
+== Quality Attributes
+
+[small]
+----
+This section provides information about the desired quality attributes
+----
+
+
+
+
+<<< 
+
+== Constraints
+
+[small]
+----
+This section provides a list of the environmental constraints imposed on the development of the System (timescales, budget, technology, team size/skills, etc).
+----
+
+=== Budget
+Since there is no formal budget for this application,
+there is a constraint to use free and open source technologies for the development. Ideally, the website should run on a single server with the cheapest hosting costs.
+
+
+
+<<< 
+
+== Principles
+
+[small]
+----
+This section provides information about the principles adopted for the development of the System.
+----
+
+=== Package by Component
+
+image::demo-system_container/package-by-component-with-clean-modules.png[test_wrong_path_placeholder]
+
+**
+
+image::containers.png[containers]
+
+image::images/containers.png[images/containers]
+
+**
+
+=== Configuration
+
+=== Automated testing
+
+
+<<< 
+
+== Software Architecture
+
+[small]
+----
+This section is a “big picture” view to present the structure of the System, including static structure (containers, components) and dynamic/runtime behaviour.
+Show here the major containers and technology choices as well as components with their interactions.
+----
+
+
+
+<<< 
+
+== External interfaces
+
+[small]
+----
+Interfaces, particularly those that are external to your software system, are one of the riskiest parts of any software system so it’s very useful to summarise what the interfaces are and how they work.
+----
+
+
+<<< 
+
+== Data
+
+[small]
+----
+This section describes data models, entity relationship diagrams (if they're complex). As well provides data secutiry info, data volumes, archiving strategies, backup strategies, etc.
+----
+
+
+
+<<< 
+
+== Infrastructure Architecture
+
+[small]
+----
+This section provides information about the infrastructure architecture of the System. Hardware requirements are described for each env.
+----
+
+
+<<< 
+
+== Deployment
+
+[small]
+----
+This section provides information about the mapping between the software architecture and the infrastructure architecture. It provides instructions how to deploy for each env.
+----
+
+
+
+<<< 
+
+== Development Environment
+
+[small]
+----
+This section describes the development environment required to build the System. It describes how a new developer gets started.
+----
+
+
+<<< 
+
+== Operation and Support
+
+[small]
+----
+This section describes how people will run, monitor and manage Software System.
+----
+
+
+<<< 
+

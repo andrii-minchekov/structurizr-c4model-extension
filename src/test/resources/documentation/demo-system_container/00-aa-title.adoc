@@ -1,0 +1,11 @@
+[.text-center]
+= Solution Architecture Document
+:doctype: book
+:toc: preamble
+
+[.text-center]
+[discrete]
+== *Demo System*
+
+[.text-center]
+Document version: 1.0, October 20, 2023, Company: https://example.com/[EXAMPLE]
