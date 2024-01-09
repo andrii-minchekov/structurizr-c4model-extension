@@ -1,8 +1,9 @@
 package com.anmi.c4.config
 
+import com.structurizr.configuration.WorkspaceScope
 import java.nio.file.Files
 import java.nio.file.Paths
-import java.util.Properties
+import java.util.*
 
 object ConfigCreator {
 
@@ -19,6 +20,7 @@ object ConfigCreator {
             override val apiSecret = apiSecret
             override val workspaceId = workspaceId
             override val profileName = profileName
+            override val scope: WorkspaceScope = WorkspaceScope.SoftwareSystem
         }
     }
 

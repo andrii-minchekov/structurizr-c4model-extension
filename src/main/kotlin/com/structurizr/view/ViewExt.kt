@@ -45,7 +45,7 @@ internal fun ViewSet.addDynamicViews(newModel: Model, remoteComponentViews: Coll
     this.setDynamicViews(thisViews.toSet())
 }
 
-private inline fun <reified T : View> filterByNonExistKey(remoteComponentViews: Collection<T>, newModel: Model, thisViews: MutableCollection<out T>): Collection<T> {
+private inline fun <reified T : ModelView> filterByNonExistKey(remoteComponentViews: Collection<T>, newModel: Model, thisViews: MutableCollection<out T>): Collection<T> {
     return remoteComponentViews.filter { view ->
         if (view.softwareSystem != null) {
             val system = newModel.getSoftwareSystemWithName(view.softwareSystem.name)
@@ -63,33 +63,33 @@ private inline fun <reified T : View> isContainerValid(view: T, system: Software
             system.getContainerWithName(view.container.name) != null
         } else true
 
-fun View.add(element: Element) {
+fun ModelView.add(element: Element) {
     this.addElement(element, true)
 }
 
-fun View.addElementsWithIncomingRelationTo(target: Element) {
+fun ModelView.addElementsWithIncomingRelationTo(target: Element) {
     target.model.relationships.stream().filter { r -> r.destination == target }.forEach {
         this.add(it.source)
     }
 }
 
-fun View.addElementsWithOutgoingRelationFrom(source: Element) {
+fun ModelView.addElementsWithOutgoingRelationFrom(source: Element) {
     source.relationships.forEach { relation ->
         this.add(source.model.getElement(relation.source.id)!!)
         this.add(source.model.getElement(relation.destination.id)!!)
     }
 }
 
-fun View.addAllElementsRelatedWith(element: Element) {
+fun ModelView.addAllElementsRelatedWith(element: Element) {
     this.addElementsWithIncomingRelationTo(element)
     this.addElementsWithOutgoingRelationFrom(element)
 }
 
-fun View.add(system: ISystem) {
+fun ModelView.add(system: ISystem) {
     this.add(this.model.getSystem(system))
 }
 
-fun View.add(person: IPerson) {
+fun ModelView.add(person: IPerson) {
     this.add(this.model.getPerson(person))
 }
 
@@ -99,7 +99,7 @@ fun DynamicView.add(source: StaticStructureElement, description: String, destina
     return relationshipView
 }
 
-fun View.addElementsWithTag(elements: Set<Element>, vararg tags: ITag) {
+fun ModelView.addElementsWithTag(elements: Set<Element>, vararg tags: ITag) {
     elements.forEach { element ->
         when {
             tags.isEmpty() -> {
@@ -116,7 +116,7 @@ fun View.addElementsWithTag(elements: Set<Element>, vararg tags: ITag) {
     }
 }
 
-fun View.removeElementsWithTagOnly(elements: Set<Element>, tag: String) {
+fun ModelView.removeElementsWithTagOnly(elements: Set<Element>, tag: String) {
     elements.forEach {
         when {
             it.hasTag(tag) && it.tagsAsSet.size == 1 -> this.removeElement(it)
@@ -124,7 +124,7 @@ fun View.removeElementsWithTagOnly(elements: Set<Element>, tag: String) {
     }
 }
 
-fun View.removeRelationshipsNotConnectedToElements(vararg element: Element) {
+fun ModelView.removeRelationshipsNotConnectedToElements(vararg element: Element) {
     relationships.stream()
             .map { it.relationship }
             .filter { !element.contains(it.source) && !element.contains(it.destination) }

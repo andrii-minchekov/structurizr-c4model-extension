@@ -13,8 +13,6 @@ image::demo-system_container/package-by-component-with-clean-modules.png[test_wr
 
 image::containers.png[containers]
 
-image::images/containers.png[images/containers]
-
 **
 
 === Configuration

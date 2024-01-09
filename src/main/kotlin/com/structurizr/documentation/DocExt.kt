@@ -1,16 +1,22 @@
 package com.structurizr.documentation
 
 import com.structurizr.Workspace
-import com.structurizr.model.Element
-import com.structurizr.model.findElementByCanonicalName
 
 internal fun Workspace.replaceDocumentationBy(doc: Documentation) {
     doc.sections.forEach {
-        val element: Element? = it.element?.let { element: Element -> model.findElementByCanonicalName(element.canonicalName) }
-        this.documentation.addSection(element, it.title, it.format, it.content)
+        this.documentation.addSection(Section(it.format, it.content))
     }
     doc.decisions.forEach {
-        this.documentation.addDecision(it.element?.let { model.getSoftwareSystemWithName(it.name) }, it.id, it.date, it.title, it.status, it.format, it.content)
+        val decision = Decision().apply {
+            this.id = it.id
+            this.title = it.title
+            this.date = it.date
+            this.status = it.status
+            this.format = it.format
+            this.content = it.content
+
+        }
+        this.documentation.addDecision(decision)
     }
     doc.images.forEach {
         this.documentation.addImage(it)

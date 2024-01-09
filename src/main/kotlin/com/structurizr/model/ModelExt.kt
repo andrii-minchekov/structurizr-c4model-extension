@@ -2,7 +2,6 @@ package com.structurizr.model
 
 import cc.catalysts.structurizr.kotlin.ElementConfiguration
 import com.anmi.c4.model.element.*
-import com.structurizr.analysis.AbstractSpringComponentFinderStrategy.*
 import java.lang.reflect.Constructor
 
 fun newModel(): Model {
@@ -59,7 +58,7 @@ private fun Model.addSoftwareSystem(iSystem: ISystem): SoftwareSystem {
 
 fun SoftwareSystem.getContainer(iContainer: IContainer): Container {
     return this.getContainerWithName(iContainer.label)
-            ?: this.addContainer(iContainer)
+        ?: this.addContainer(iContainer)
 }
 
 fun SoftwareSystem.addContainer(container: IContainer): Container {
@@ -94,16 +93,6 @@ private fun Element.assignTags(tags: Array<ITag>): Element {
     return this.apply { addTags(*tags.map { it.label }.toTypedArray()) }
 }
 
-fun Model.tagSpringComponents() {
-    this.softwareSystems.forEach {
-        it.containers.forEach {
-            it.components.filter { c -> c.technology == SPRING_REST_CONTROLLER }.forEach { c -> c.addTags(ATag.SPRING_REST_CONTROLLER.label) }
-            it.components.filter { c -> c.technology == SPRING_SERVICE }.forEach { c -> c.addTags(ATag.SPRING_SERVICE.label) }
-            it.components.filter { c -> c.technology == SPRING_REPOSITORY }.forEach { c -> c.addTags(ATag.SPRING_REPOSITORY.label) }
-        }
-    }
-}
-
 fun Model.findRelation(sourceCanonicalName: String, destinationCanonicalName: String): Relationship {
     val filter = this.relationships.filter {
         it.source.canonicalName == sourceCanonicalName && it.destination.canonicalName == destinationCanonicalName
@@ -134,7 +123,7 @@ inline fun <reified T : Element> Model.findElementByCanonicalName(canonicalName:
 }
 
 inline fun <reified T : Element> firstFrom(foundComp: List<*>): T =
-        foundComp.first() as T
+    foundComp.first() as T
 
 fun Model.components(): List<Component> {
     return this.softwareSystems.flatMap { s -> s.containers }.flatMap { c -> c.components }

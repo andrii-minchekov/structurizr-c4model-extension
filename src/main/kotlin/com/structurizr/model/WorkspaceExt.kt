@@ -2,22 +2,17 @@ package com.structurizr.model
 
 import cc.catalysts.structurizr.kotlin.Dependency
 import cc.catalysts.structurizr.kotlin.ElementConfiguration
-import com.anmi.c4.analysis.ComponentFinderParams
-import com.anmi.c4.analysis.LocalPathToGitUrl
-import com.anmi.c4.analysis.Packages
-import com.anmi.c4.analysis.Sources
 import com.anmi.c4.config.Config
 import com.anmi.c4.config.ConfigCreator
-import com.anmi.c4.config.ConfigInstance
 import com.anmi.c4.config.StructurizrFactory
 import com.anmi.c4.diagram.ComponentDiagram.Companion.buildKey
 import com.anmi.c4.diagram.style.Stylize
 import com.anmi.c4.model.element.IContainer
 import com.anmi.c4.model.element.ITag
 import com.anmi.c4.model.element.Technology
-import com.anmi.c4.util.ScannedWorkspace
 import com.anmi.c4.util.WorkspaceUploader
 import com.structurizr.Workspace
+import com.structurizr.documentation.Decision
 import com.structurizr.documentation.replaceDocumentationBy
 import com.structurizr.view.*
 import org.slf4j.LoggerFactory
@@ -64,15 +59,20 @@ private fun Workspace.mergeInto(remoteWorkspace: Workspace, thisBypassContainer:
     } else {
         this.importDecisionsFrom(remoteWorkspace)
     }
-    this.model.tagSpringComponents()
     return this
 }
 
 private fun Workspace.importDecisionsFrom(workspace: Workspace) {
     workspace.documentation.decisions.forEach {
-        this.documentation.addDecision(
-                it.element?.let { exist: Element -> this.model.getSoftwareSystemWithName(exist.name) }, it.id, it.date, it.title, it.status, it.format, it.content
-        )
+        val decision = Decision(it.id).apply {
+            this.title = it.title
+            this.date = it.date
+            this.status = it.status
+            this.format = it.format
+            this.content = it.content
+        }
+        this.documentation.addDecision(decision)
+        this.documentation.addDecision(decision)
     }
 }
 
@@ -81,8 +81,10 @@ private inline fun <reified T : View> filterComponentViewOf(targetContainer: Str
         val viewScopeElement = when (view) {
             is ComponentView -> view.container ?: view.model.getElement(view.containerId)
             ?: throw IllegalStateException("either container or containerId should be present in ComponentView")
+
             is DynamicView -> view.element ?: view.model.getElement(view.elementId)
             ?: throw IllegalStateException("either element or elementId should be present in DynamicView")
+
             else -> throw IllegalArgumentException("Only Component or Dynamic Component View is supported")
         }
         viewScopeElement.name != (targetContainer)
@@ -171,7 +173,11 @@ private fun Model.addRelationshipInternal(r: Relationship) {
 }
 
 fun Workspace.defaultComponentView(container: Container): ComponentView {
-    val view = this.views.createComponentView(container, buildKey(container.softwareSystem.name, container.name), "Default Component view of ${container.name}")
+    val view = this.views.createComponentView(
+        container,
+        buildKey(container.softwareSystem.name, container.name),
+        "Default Component view of ${container.name}"
+    )
     view.paperSize = PaperSize.A2_Landscape
     view.addAllComponents()
     return view
@@ -189,15 +195,7 @@ fun ElementConfiguration.usedBy(element: Element, description: String, vararg te
     this.usedBy.add(Dependency(element, description, technologies.joinToString(transform = Technology::toString), interactionStyle))
 }
 
-fun Workspace.scanComponentsWith(config: ConfigInstance, containerName: String = "Scratch-${(0..10).random()}", packagesWithComponents: Set<String>, javadocSourceDirs: Set<String>? = Sources().sourceDirs,
-                                 localPathToGitUrl: LocalPathToGitUrl? = null) {
-    val container = this.model.getSystem(ScannedWorkspace.fakeSystem()).addContainer(containerName, "It's just a playground container", "")
-    container.addComponentsFrom(ComponentFinderParams(Packages(packagesWithComponents), javadocSourceDirs?.let { Sources(javadocSourceDirs, localPathToGitUrl) }))
-    this.defaultComponentView(container)
-    StructurizrFactory.client(config).putWorkspace(config.workspaceId, this)
-}
-
-fun Workspace.upload(config: Config) : Workspace {
+fun Workspace.upload(config: Config): Workspace {
     WorkspaceUploader.upload(this, config)
     return this
 }

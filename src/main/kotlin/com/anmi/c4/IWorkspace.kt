@@ -26,6 +26,7 @@ interface IWorkspace {
 
     operator fun invoke(): Workspace {
         val workspace = createEmptyWorkspace(cfg)
+        workspace.configuration.scope = cfg.scope
         spec(workspace)
         ADocumentation(workspace)
         return workspace

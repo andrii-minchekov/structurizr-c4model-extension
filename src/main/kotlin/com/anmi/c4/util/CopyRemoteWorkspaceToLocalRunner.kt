@@ -3,7 +3,7 @@ package com.anmi.c4.util
 import com.anmi.c4.config.Config
 import com.anmi.c4.config.StructurizrFactory
 import com.structurizr.Workspace
-import com.structurizr.io.plantuml.StructurizrPlantUMLExporter
+import com.structurizr.export.plantuml.StructurizrPlantUMLExporter
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
