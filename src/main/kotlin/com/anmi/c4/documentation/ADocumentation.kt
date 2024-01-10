@@ -27,8 +27,11 @@ class ADocumentation(workspace: Workspace) {
             val file = File(docRootURL.toURI())
             val documentationImporter = DefaultDocumentationImporter()
             documentationImporter.importDocumentation(system, file)
-            val imageImporter = DefaultImageImporter()
-            imageImporter.importDocumentation(system, File(file.absolutePath + File.separator + "images"))
+            val imageDir = File(file.absolutePath + File.separator + "images")
+            if (imageDir.exists()) {
+                val imageImporter = DefaultImageImporter()
+                imageImporter.importDocumentation(system, imageDir)
+            }
         }
     }
 }
